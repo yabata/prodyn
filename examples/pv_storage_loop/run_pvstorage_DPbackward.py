@@ -19,6 +19,9 @@ cst,srs,U,states = model.read_data(file)
 #import system model function
 system=model.system_model
 
+#timesteps used
+timesteps=np.arange(1,49)
+
 #########################################
 #Edit end costs JT
 # prodyn allows to define end costs for the discretized state substeps
@@ -47,7 +50,7 @@ system=model.system_model
 #Run Dynamic Programming Forward implentation
 
 #run the algorithm with defined states, decisions, constants and series
-result = prd.DP_backward(states,U,cst,srs,system,verbose=True)
+result = prd.DP_backward(states,U,timesteps,cst,srs,system,verbose=True,t_verbose=10)
 
 
 #The function returns a pandas DataFrame with 2 index rows "t" and "X_start"
@@ -74,13 +77,14 @@ result = prd.DP_backward(states,U,cst,srs,system,verbose=True)
 result0 = result.xs(0,level='Xidx_start')
 
 # To access the different results, notice that the last timestep is not used
-bat = result0.loc[1:48]['bat'].values.astype(np.float)
-load_grid = result0.loc[1:48]['load_grid'].values.astype(np.float)
-pv = srs['pv'].values
-elec_costs = srs['elec_costs'].values
+bat = result0.loc[timesteps]['bat'].values.astype(np.float)
+load_grid = result0.loc[timesteps]['load_grid'].values.astype(np.float)
+pv = srs.loc[timesteps]['pv'].values
+elec_costs = srs.loc[timesteps]['elec_costs'].values
+demand = srs.loc[timesteps]['demand'].values
 
 #The optimal decisions for each timestep can be accesed in the same way
-opt_control = result0.loc[1:48]['U']
+opt_control = result0.loc[timesteps]['U']
 print('\n#######################')
 print('Optimal control decisions:')
 print(opt_control)
@@ -88,23 +92,22 @@ print('#######################')
 
 #Only for the states, use all timesteps
 # Here the X represents the energy content of the storage
-energy = result0['X']
+energy = result0['energy']
 
 
 #######################################
 #Prepare results for plotting
-t = result0.loc[1:48].index.values
 
-grid_import = np.zeros(len(t))
+grid_import = np.zeros(len(timesteps))
 grid_import[load_grid>0] = load_grid[load_grid>0]
 
-grid_export = np.zeros(len(t))
+grid_export = np.zeros(len(timesteps))
 grid_export[load_grid<0] = load_grid[load_grid<0]
 
-bat_charge = np.zeros(len(t))
+bat_charge = np.zeros(len(timesteps))
 bat_charge[bat>0] = bat[bat>0]
 
-bat_discharge = np.zeros(len(t))
+bat_discharge = np.zeros(len(timesteps))
 bat_discharge[bat<0] = bat[bat<0]
 
 
@@ -119,10 +122,10 @@ ms=12
 
 ##Subplot 1
 ax1 = fig.add_subplot(gs[0])
-ax1.plot(t,srs['demand'],label='demand',lw=3,color='k')
-ax1.stackplot(t,grid_import,-bat_discharge,pv,\
+ax1.plot(timesteps,demand,label='demand',lw=3,color='k')
+ax1.stackplot(timesteps,grid_import,-bat_discharge,pv,\
 				colors = ['cornflowerblue','lightgreen','yellow'],lw=0)
-ax1.stackplot(t,grid_export,-bat_charge,\
+ax1.stackplot(timesteps,grid_export,-bat_charge,\
 				colors = ['navy','green'],lw=0)
 
 ax1.grid()
@@ -153,7 +156,7 @@ ax2.legend(fontsize=fs-2,numpoints = 1,handlelength=1)
 
 ##Subplot 3
 ax3 = fig.add_subplot(gs[2],sharex=ax1)
-ax3.plot(t,elec_costs,lw=3,color='cornflowerblue', label = 'electricity costs')
+ax3.plot(timesteps,elec_costs,lw=3,color='cornflowerblue', label = 'electricity costs')
 
 ax3.grid()
 ax3.tick_params(labelsize=fs-2)

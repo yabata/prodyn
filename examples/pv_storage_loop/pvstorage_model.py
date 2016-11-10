@@ -9,7 +9,7 @@ def read_data(file):
 	cst = xls.parse('Constants',index_col=[0])['Value']
 	srs = xls.parse('Time-Series',index_col=[0])
 	U = xls.parse('DP-Decisions',index_col=[0])['Decisions'].values
-	states = xls.parse('DP-States').loc[0]
+	states = xls.parse('DP-States',index_col=[0])
 	return cst,srs,U,states
 
 	
