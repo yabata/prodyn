@@ -150,7 +150,7 @@ def DP_forward(states,U,timesteps,cst,srs,system,J0=None,verbose=False,t_verbose
 		data_ = pd.DataFrame(index=idx_data_,columns = columns_data_ )
 		if verbose and t%t_verbose==0:
 			print('Timestep: ',t) #shell output
-		
+				
 		#for all decisions u	
 		for u in U:
 			cost_u, Xj_val_u,data_u=system(u,Xi_val,t,cst,srs,Data) #simulate system for all states Xi_val
@@ -210,6 +210,7 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 	
 	# Prepare parameters needed for DP
 	Xi_val, Xidx, XX, xsteps, columns, columns_u = prepare_DP(states)
+	Xi_val_2d = np.atleast_2d(Xi_val) #for one state, a 2d array of Xi_val is needed to implement a general model (used for indexing when creating data_)
 	lenX = len(Xidx)
 	
 	#Time
@@ -253,7 +254,7 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 		#filling first Dataframe
 		mi = MI[u]
 		data_.loc[mi,data_u.columns] = data_u.values
-		data_.loc[mi,columns] = np.vstack([cost_u + J[Xidx_j_u],Xi_val,Xidx,Xidx_j_u,Xi_val[Xidx_j_u]]).transpose()
+		data_.loc[mi,columns] = np.vstack([cost_u + J[Xidx_j_u],Xi_val,Xidx,Xidx_j_u,Xi_val_2d[:,Xidx_j_u]]).transpose()
 		data_.loc[mi,'U'] = u
 	
 	idx = data_['J'].groupby(level=0).idxmin() #index of min costs
@@ -276,7 +277,7 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 			Xidx_j_u = find_nearest(Xj_val_u,XX,xsteps)#find index of nearest disrete state
 			mi = MI[u]
 			data_.loc[mi,data_u.columns] = data_u.values
-			data_.loc[mi,columns] = np.vstack([cost_u + J[Xidx_j_u],Xi_val,Xidx,Xidx_j_u,Xi_val[Xidx_j_u]]).transpose()
+			data_.loc[mi,columns] = np.vstack([cost_u + J[Xidx_j_u],Xi_val,Xidx,Xidx_j_u,Xi_val_2d[:,Xidx_j_u]]).transpose()
 			data_.loc[mi,'U'] = u
 				
 		idx = data_['J'].groupby(level=0).idxmin() #index of min costs
@@ -360,7 +361,7 @@ def modify_results(Data,states):
 		T_ = Data.index.levels[0][-1] #additional timestep to store the state value at end of last timestep
 		
 		Data[state] = Data[col_i] #copy state value at beginning of each timestep
-		Data.loc[T_][state] = Data.loc[T,state] #add state value at end of last timestep
+		Data.loc[T_][state] = Data.loc[T,col_j] #add state value at end of last timestep
 		Data.drop([col_i,col_j],axis=1,inplace=True) #drop col_i and col_j
 	
 	Data.drop(['Xidx','Xidxj'],axis=1,inplace=True) #drop 'Xidx' and 'Xidxj'

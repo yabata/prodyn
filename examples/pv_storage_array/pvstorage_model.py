@@ -63,7 +63,6 @@ def system_model(u,x,t,cst,Srs,Data):
 			penalty_costs = 999
 			x_j = x #x_j has to be defined
 		else:
-			# pdb.set_trace()
 			bat = np.ones(l)*np.min([cst['P_max'],-res]) # charging power is negative residual load (unless it is not greater than maximum battery power)
 			penalty_costs = (x==xmax)*999	# charging is not possible fo a full storage (x==xmax) -> penalty costs
 			
