@@ -1,6 +1,7 @@
 # prodyn
 Implementation of the dymaic programming algorithm for optimal system control
 
+<<<<<<< HEAD
 ## Features
 
   * mutiple states
@@ -31,3 +32,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>
+=======
+a
+>>>>>>> 6822377bd499cd038daf29d2b3c8b436c98175ef
