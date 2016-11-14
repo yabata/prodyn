@@ -1,7 +1,7 @@
 # prodyn
 Implementation of the dymaic programming algorithm for optimal system control
 
-[![Documentation Status](https://readthedocs.org/projects/prodyn/badge/?version=latest)](https://pyrenn.readthedocs.org/en/latest/) [![DOI](https://zenodo.org/badge/73300738.svg)](https://zenodo.org/badge/latestdoi/73300738)
+[![Documentation Status](https://readthedocs.org/projects/prodyn/badge/?version=latest)](https://prodyn.readthedocs.org/en/latest/) [![DOI](https://zenodo.org/badge/73300738.svg)](https://zenodo.org/badge/latestdoi/73300738)
 
 ## Features
 
@@ -14,7 +14,7 @@ Implementation of the dymaic programming algorithm for optimal system control
 1. [download](https://github.com/yabata/prodyn/archive/master.zip) or clone (with [git](http://git-scm.com/)) this repository to a directory of your choice.
 2. Copy the `prodyn.py` file in the `prodyn` folder to a directory which is already in python's search path or add the `prodyn` folder to python's search path (sys.path) ([how to](http://stackoverflow.com/questions/17806673/where-shall-i-put-my-self-written-python-packages/17811151#17811151))
 3. Run the given examples in the `examples` folder.
-4. Read the [documenation](http://pyrenn.readthedocs.org) and implement your own system function to optimize
+4. Read the [documenation](http://prodyn.readthedocs.org) and implement your own system function to optimize
 
 
 ## Copyright
