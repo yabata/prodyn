@@ -1,6 +1,5 @@
 # prodyn
 Implementation of the dymaic programming algorithm for optimal system control
-(test)
 
 [![Documentation Status](https://readthedocs.org/projects/prodyn/badge/?version=latest)](https://prodyn.readthedocs.org/en/latest/) [![DOI](https://zenodo.org/badge/73300738.svg)](https://zenodo.org/badge/latestdoi/73300738)
 
