@@ -90,22 +90,19 @@ def building(u,x,t,cst,Srs,Data):
     P_th = np.zeros(l)
     costx = np.zeros(l)
     
-    #initializing the starting position of optimization     
-    t0 = cst['t0']
-    
     #loop for every possible state of x
     for i,xi in enumerate(x):
         #prepare 6th input for P0 and 2 outputs for Y0
-        if t-delay<t0:
+        if t-delay<cst['t_start']:
             #take all values for P0 and Y0 from timeseries            
-            if Data is None or t==t0:
+            if Data is None or t==cst['t_start']:
                 T_room0 = Srs.loc[t-delay:t-1]['T_room'].values.copy()
                 P_th0 = Srs.loc[t-delay:t-1]['P_th'].values.copy()
                 massflow0 = Srs.loc[t-delay:t-1]['massflow'].values.copy()
             
             #take part of values from timeseries and part from big Data            
             else:
-                tx = t-t0
+                tx = t-cst['t_start']
                 T_room0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['T_room'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['T_room'].values.copy()])
                 P_th0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['P_th'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()])
                 massflow0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['massflow'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['massflow'].values.copy()])

@@ -22,11 +22,8 @@ srs['T_room'] = 20
 timesteps=np.arange(cst['t_start'],cst['t_end'])
 
 #define NN 
-net = prn.loadNN('testNN_aprbs.csv') #use pre-trained NN
+net = prn.loadNN('NN_building.csv') #use pre-trained NN
 cst['net'] = net
-
-#choose timestep, from which optimization will start
-cst['t0']=4
 
 #creating array of initial terminal costs J0 
 xsteps=np.prod(states['xsteps'].values)
@@ -67,34 +64,36 @@ Tmin = srs.loc[timesteps[0]-4:timesteps[-1]]['Tmin']
 fig = plt.figure(figsize=[11,9])
 ls=14
 bs=16    
-xlim=timesteps[-1]
+
+#prepairing array time, which transforms initial and optimisation timesteps in hours
+timesteps0=np.arange(timesteps[0]-4,timesteps[0])
+time=np.concatenate((timesteps0,timesteps)).astype('float')/4
     
 ax0 = fig.add_subplot(211)
 ax1 = fig.add_subplot(212,sharex=ax0)
 
 #first plot
 ax0.set_title('Results of 1-day (4-100) optimization')
-ax0.plot(Troom,lw = 2,label='$T_{room}$')
-ax0.set_ylabel('$T, [$^\circ$C]$',fontsize = bs)
-ax0.set_xlim([0,xlim])
-ax0.set_xlabel('$timesteps$',fontsize = bs)
-ax0.plot(Tmin,color='r',lw=1,label='$T_{min}$')
-ax0.plot(Tmax,color='r',lw=1,label='$T_{max}$')
+ax0.plot(time, Troom, lw = 2,label='$T_{room}$')
+ax0.set_ylabel('$T, [C]$',fontsize = bs)
+ax0.set_ylim([15,27])
+ax0.set_xlabel('$time, [h]$',fontsize = bs)
+ax0.plot(time,Tmax,color='r',lw=1,label='$T_{max}$')
+ax0.plot(time, Tmin,color='r',lw=1,label='$T_{min}$')
 ax0.tick_params(axis='x',labelsize=ls)
 ax0.tick_params(axis='y',labelsize=ls)
-ax0.legend(fontsize=bs,loc=1)
+ax0.legend(fontsize=bs,loc=9, ncol=3)
 ax0.grid()
  
 #second plot   
-ax1.plot(Pel,lw = 2)
+ax1.plot(time, Pel,lw = 2)
 ax1.set_ylabel('$P_{el}, [kW]$',fontsize = bs)
-ax1.set_xlim([0,xlim])
-ax1.set_xlabel('$timesteps$',fontsize = bs)
+ax1.set_xlabel('$time, [h]$',fontsize = bs)
 ax1.tick_params(axis='x',labelsize=ls)
 ax1.tick_params(axis='y',labelsize=ls)
 ax1.grid()
     
-fig.tight_layout()
+#fig.tight_layout()
     
 plt.show()
 
