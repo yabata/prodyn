@@ -75,7 +75,7 @@ ax1 = fig.add_subplot(212,sharex=ax0)
 #first plot
 ax0.set_title('Results of 1-day (4-100) optimization')
 ax0.plot(time, Troom, lw = 2,label='$T_{room}$')
-ax0.set_ylabel('$T, [C]$',fontsize = bs)
+ax0.set_ylabel(r'$T, [^\circ C]$',fontsize = bs)
 ax0.set_ylim([15,27])
 ax0.set_xlabel('$time, [h]$',fontsize = bs)
 ax0.plot(time,Tmax,color='r',lw=1,label='$T_{max}$')
