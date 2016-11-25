@@ -175,9 +175,6 @@ def DP_forward(states,U,timesteps,cst,srs,system,J0=None,verbose=False,t_verbose
 		Data.loc[mi0] = Data.loc[mi1].values
 		
 	Data = modify_results(Data,states)	
-	# Data['X'] = Data['Xi']
-	# Data.loc[T+1,'X'] = Xval
-	# Data.drop(['Xi','Xidx','Xidxj'],axis=1,inplace=True)
 	return Data
 
 def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbose=1):
@@ -290,11 +287,6 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 		Data.loc[mi0] = Data.loc[mi1].values		
 		
 	Data = modify_results(Data,states)
-	# mit0 = pd.MultiIndex.from_product([range(t0+1,T+2),Xidx])
-	# mit1 = pd.MultiIndex.from_product([range(t0,T+1),Xidx])
-	# Data.loc[mit0,'X'] = Data.loc[mit1,'Xj'].values
-	# Data.loc[timesteps[0],'X'] = Xval#First State
-	# Data.drop(['Xj','Xidxj'],axis=1,inplace=True)
 	return Data
 	
 	
@@ -333,7 +325,27 @@ def find_nearest(xj,XX,xsteps):
 		else:
 			Xidx_j = Xidx_j + Ind[i] * xsteps[i+1:].prod() 
 
-	return Xidx_j	
+	return Xidx_j
+	
+def find_index(xvalues,states):
+	"""Find the vector with indices Xidx_j for each possible condition of the system
+	characterized by xj with respect to the discretized array Xi_val
+
+	Args:
+		xvalues: array of states, for which the index is needed 
+		states: pandas dataframe where each index represents a state variable
+			xmin: minimum value of the state variable
+			xmax: maximum value of the state variable
+			xstpes: number of discretization steps for this state variable
+			
+	Returns:
+		Xidx_j: vector that contains the index of Xi_val, which value is 
+		the nearest to xvalues 
+
+	"""
+	Xi_val, Xidx, XX, xsteps, columns, columns_u = prepare_DP(states)
+	Xidx_j = find_nearest(xvalues,XX,xsteps)
+	return Xidx_j
 	
 def modify_results(Data,states):
 	""" Rename columns of result DataFrame Data and drop unnecessary columns
