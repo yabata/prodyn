@@ -58,6 +58,10 @@ Pel=np.concatenate((srs.loc[timesteps[0]-4:timesteps[0]-1]['P_th'],Pel))
 Tmax = srs.loc[timesteps[0]-4:timesteps[-1]]['Tmax']
 Tmin = srs.loc[timesteps[0]-4:timesteps[-1]]['Tmin']
 
+#taking values for price electricity and solar radition
+price_elec=srs.loc[timesteps[0]-4:timesteps[-1]]['price_elec']
+solar=srs.loc[timesteps[0]-4:timesteps[-1]]['solar']
+
 ########################################################
 #plotting
 ########################################################
@@ -70,28 +74,49 @@ timesteps0=np.arange(timesteps[0]-4,timesteps[0])
 time=np.concatenate((timesteps0,timesteps)).astype('float')/4
     
 ax0 = fig.add_subplot(211)
-ax1 = fig.add_subplot(212,sharex=ax0)
+ax1=ax0.twinx()
+
+ax2 = fig.add_subplot(212,sharex=ax0)
+ax3=ax2.twinx()
 
 #first plot
 ax0.set_title('Results of 1-day (4-100) optimization')
-ax0.plot(time, Troom, lw = 2,label='$T_{room}$')
+lns1=ax0.plot(time, Troom, lw = 2,label='$T_{room}$')
 ax0.set_ylabel(r'$T, [^\circ C]$',fontsize = bs)
 ax0.set_ylim([15,27])
 ax0.set_xlabel('$time, [h]$',fontsize = bs)
-ax0.plot(time,Tmax,color='r',lw=1,label='$T_{max}$')
-ax0.plot(time, Tmin,color='r',lw=1,label='$T_{min}$')
+lns2=ax0.plot(time,Tmax,color='r',lw=1,label='$T_{max}$')
+lns3=ax0.plot(time, Tmin,color='r',lw=1,label='$T_{min}$')
 ax0.tick_params(axis='x',labelsize=ls)
 ax0.tick_params(axis='y',labelsize=ls)
-ax0.legend(fontsize=bs,loc=9, ncol=3)
+#ax0.legend(fontsize=bs,loc=9, ncol=3)
 ax0.grid()
+
+lns4=ax1.plot(time,solar,color = 'g', lw = 2, label='$solar$')
+ax1.set_ylabel('$solar$ $rad, [kJ/hm^2]$',fontsize = bs)
+ax1.set_ylim([0,2000])
+ax1.tick_params(axis='y',labelsize=ls)
+lnsa = lns1+lns2+lns3+lns4
+labs = [l.get_label() for l in lnsa]
+ax0.legend(lnsa, labs,fontsize=bs, loc=9,ncol=4)
+
  
 #second plot   
-ax1.plot(time, Pel,lw = 2)
-ax1.set_ylabel('$P_{el}, [kW]$',fontsize = bs)
-ax1.set_xlabel('$time, [h]$',fontsize = bs)
-ax1.tick_params(axis='x',labelsize=ls)
-ax1.tick_params(axis='y',labelsize=ls)
-ax1.grid()
+lns1=ax2.plot(time, Pel,lw = 2,label='$P_{el}$')
+ax2.set_ylabel('$P_{el}, [kW]$',fontsize = bs)
+ax2.set_xlabel('$time, [h]$',fontsize = bs)
+ax2.set_ylim([-0.5,1.5])
+ax2.tick_params(axis='x',labelsize=ls)
+ax2.tick_params(axis='y',labelsize=ls)
+ax2.grid()
+
+lns2=ax3.plot(time,price_elec*100,color = 'y', lw = 2, label='$price$ $elec$')
+ax3.set_ylabel('$elec$ $price, [cent/kWh]$',fontsize = bs)
+ax3.set_ylim([15,80])
+ax3.tick_params(axis='y',labelsize=ls)
+lnsb = lns1+lns2
+labs = [l.get_label() for l in lnsb]
+ax2.legend(lnsb, labs,fontsize=bs, loc=9,ncol=2)
     
 #fig.tight_layout()
     
