@@ -28,7 +28,8 @@ cst['net'] = net
 #creating array of initial terminal costs J0 
 xsteps=np.prod(states['xsteps'].values)
 J0 = np.zeros(xsteps)
-J0[0] = -9999.9
+idx = prd.find_index(np.array([20]),states)
+J0[idx] = -9999.9
 
 #define function for simulation that calculates costs and next state
 system=model.building

@@ -27,7 +27,8 @@ cst['net'] = net
 #creating array of initial terminal costs J0 
 xsteps=np.prod(states['xsteps'].values)
 J0 = np.zeros(xsteps)
-J0[0] = -9999.9
+idx = prd.find_index(np.array([20,0]),states)
+J0[idx] = -9999.9
 
 #define function for simulation that calculates costs and next state
 system=model.building_with_storage
@@ -49,12 +50,14 @@ opt_result = result.xs(i_mincost,level='Xidx_end')
 best_massflow=opt_result['massflow'].values[:-1]
 Troom=opt_result['T_room'].values[:-1]
 Pel=opt_result['P_el'].values[:-1]
-E=opt_result['E'].values[:-1]
+Pth=opt_result['P_th'].values[:-1]
+E=opt_result['heat-storage'].values[:-1]
 
 #summing first initial timesteps and timesteps, which are involved in optimisation
 Troom=np.concatenate((srs.loc[timesteps[0]-4:timesteps[0]-1]['T_room'],Troom))
 Pel=np.concatenate((srs.loc[timesteps[0]-4:timesteps[0]-1]['P_th'],Pel))
-E=np.concatenate((np.zeros(cst['t_start']),E))
+Pth=np.concatenate((srs.loc[timesteps[0]-4:timesteps[0]-1]['P_th'],Pth))
+E=np.concatenate((np.zeros(4),E))
 
 #selecting borders for allowed Troom
 Tmax = srs.loc[timesteps[0]-4:timesteps[-1]]['Tmax']
@@ -69,7 +72,6 @@ solar=srs.loc[timesteps[0]-4:timesteps[-1]]['solar']
 #plotting
 ########################################################
 fig1 = plt.figure(figsize=[11,9])
-fig2 = plt.figure(figsize=[11,9])
 ls=14
 bs=16    
 
@@ -77,13 +79,13 @@ bs=16
 timesteps0=np.arange(timesteps[0]-4,timesteps[0])
 time=np.concatenate((timesteps0,timesteps)).astype('float')/4
     
-ax0 = fig1.add_subplot(211)
+ax0 = fig1.add_subplot(311)
 ax1=ax0.twinx()
 
-ax2 = fig1.add_subplot(212,sharex=ax0)
+ax2 = fig1.add_subplot(312,sharex=ax0)
 ax3=ax2.twinx()
 
-ax4 = fig2.add_subplot(111,sharex=ax0)
+ax4 = fig1.add_subplot(313,sharex=ax0)
 
 #first plot
 ax0.set_title('Results of 1-day (4-100) optimization')
@@ -108,6 +110,8 @@ ax0.legend(lnsa, labs,fontsize=bs, loc=9,ncol=4)
 
  
 #second plot   
+ax2.plot(time, Pth,lw = 2,label='$P_{th}$',color='salmon')
+
 lns1=ax2.plot(time, Pel,lw = 2,label='$P_{el}$')
 ax2.set_ylabel('$P_{el}, [kW]$',fontsize = bs)
 ax2.set_xlabel('$time, [h]$',fontsize = bs)
@@ -115,19 +119,20 @@ ax2.set_ylim([-1,7])
 ax2.tick_params(axis='x',labelsize=ls)
 ax2.tick_params(axis='y',labelsize=ls)
 ax2.grid()
+ax2.legend()
 
-lns2=ax3.plot(time,price_elec*100,color = 'y', lw = 2, label='$price$ $elec$')
-ax3.set_ylabel('$elec$ $price, [cent/kWh]$',fontsize = bs)
-ax3.set_ylim([15,80])
-ax3.tick_params(axis='y',labelsize=ls)
-lnsb = lns1+lns2
-labs = [l.get_label() for l in lnsb]
-ax2.legend(lnsb, labs,fontsize=bs, loc=9,ncol=2)
+# lns2=ax3.plot(time,price_elec*100,color = 'k', lw = 2, label='$price$ $elec$')
+# ax3.set_ylabel('$elec$ $price, [cent/kWh]$',fontsize = bs)
+# ax3.set_ylim([15,80])
+# ax3.tick_params(axis='y',labelsize=ls)
+# lnsb = lns1+lns2
+# labs = [l.get_label() for l in lnsb]
+# ax2.legend(lnsb, labs,fontsize=bs, loc=9,ncol=2)
 
 #third plot
-ax4.plot(time, E*1000,color='c', lw = 2)
-ax4.set_ylabel('$Wh$',fontsize = bs)
-ax4.set_ylim([0,1])
+ax4.plot(time, E,color='c', lw = 2)
+ax4.set_ylabel('$kWh$',fontsize = bs)
+# ax4.set_ylim([0,1])
 ax4.set_xlabel('$time, [h]$',fontsize = bs)
 ax4.tick_params(axis='x',labelsize=ls)
 ax4.tick_params(axis='y',labelsize=ls)

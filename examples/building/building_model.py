@@ -146,7 +146,7 @@ def building(u,x,t,cst,Srs,Data):
     Tmin = Srs.loc[t]['Tmin']    
     
     #calculate penalty costs
-    costx = (x_j>Tmax)*1000 + (x_j<Tmin)*1000+costx
+    costx = (x_j>Tmax)*(x_j-Tmax)**2*1000 + (x_j<Tmin)*(Tmin-x_j)**2*1000+costx
     x_j = (x_j<x[0])*x[0]\
             +(x_j>x[-1])*x[-1]\
             +((x_j>=x[0])&(x_j<=x[-1]))*x_j
