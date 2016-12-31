@@ -11,11 +11,11 @@ which are involved in the implementation process, and clarifies main functions i
 Simplified diagram of the process and connection between documents involved in it are shown in the Figure 1.    
 
 
-.. figure:: img/MLP2221_detailed.png
+.. figure:: img/basic_procedure.png
+   :width: 60%
+   :align: center
    
-:width: 95%
-   
-:align: center
+   Figure 1: Scheme of the dynamic programming implementation
 
 .. _ref-to-subchapter:
 
