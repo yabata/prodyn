@@ -134,9 +134,7 @@ def building(u,x,t,cst,Srs,Data):
         if x_j[i] != x_j[i] or P_th[i] != P_th[i]:
             pdb.set_trace()
         
-        #print(T_room0,u, x_j[i])
-    
-
+        
     ###################################
     #calculating all costs
     ###################################    
@@ -147,10 +145,10 @@ def building(u,x,t,cst,Srs,Data):
     
     #calculate penalty costs
     costx = (x_j>Tmax)*(x_j-Tmax)**2*1000 + (x_j<Tmin)*(Tmin-x_j)**2*1000+costx
-    x_j = (x_j<x[0])*x[0]\
-            +(x_j>x[-1])*x[-1]\
-            +((x_j>=x[0])&(x_j<=x[-1]))*x_j
     
+    #correcting x_j    
+    x_j=np.clip(x_j,x[0],x[-1])
+        
     #calculate costs
     P_el = P_th*T_inlet/(T_inlet-T_amb)
     cost = P_el * Srs.loc[t]['price_elec']*0.25 + costx
