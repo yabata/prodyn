@@ -135,15 +135,7 @@ labs = [l.get_label() for l in lnsb]
 ax2.legend(lnsb, labs,fontsize=ls, loc=1,ncol=2)
 
 
-# lns2=ax3.plot(time,price_elec*100,color = 'k', lw = 2, label='$price$ $elec$')
-# ax3.set_ylabel('$elec$ $price, [cent/kWh]$',fontsize = bs)
-# ax3.set_ylim([15,80])
-# ax3.tick_params(axis='y',labelsize=ls)
-# lnsb = lns1+lns2
-# labs = [l.get_label() for l in lnsb]
-# ax2.legend(lnsb, labs,fontsize=bs, loc=9,ncol=2)
-
-#third plot
+#####################third plot
 ax4.plot(time, E,color='c', lw = 2)
 ax4.set_ylabel('$E, [kWh]$',fontsize = ls)
 # ax4.set_ylim([0,1])

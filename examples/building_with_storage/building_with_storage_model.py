@@ -60,10 +60,6 @@ def building_with_storage(u,x,t,cst,Srs,Data):
 
     l = len(x[0])
     
-#    #two parametrs, which are used for faster work of the loop
-#    l1=len(np.unique(x[0])) #number of unique temperature values
-#    l2=list(x[0]).count(x[0][0]) #number of repeats of every unique temperature value
-    
     delay=4	
     net = cst['net']
     
@@ -140,13 +136,7 @@ def building_with_storage(u,x,t,cst,Srs,Data):
 		
         if T_roomj[i] != T_roomj[i] or P_th[i] != P_th[i]:
 		pdb.set_trace()
-
-
-#    #putting temperature T_room and heat power P_th for timestep j to the 
-#    #shape, which is appropriate for x and x_j
-#    T_roomj=np.repeat(T_roomj,l2)    
-#    P_th=np.repeat(P_th,l2)  
-  
+ 
         
     #calculating heat-storage state in dependance of chosen decision 
     P_hp = 2
