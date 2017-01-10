@@ -41,7 +41,7 @@ DP-States
 The part of the system, which operation should be optimized, is characterized by a number of states. Each state has min, max allowable values and number of steps between them. All these data is stored in **DP-States** sheet. **DP-States** for ``chp`` example is shown in the Figure 3.   
 
 .. figure:: img/DP_states.png
-   :width: 70%
+   :width: 60%
    :align: center
    
    Figure 3: **DP-States** from ``chp`` example
@@ -53,7 +53,7 @@ DP-Decisions
 An operation of the system for every timestep can be influenced by one of the specific decisions, which are written in **DP-Decisions** sheet. In other words, all possibilities for system control are written here. Figure 4 illustrates decisions for the same ``chp`` example.  
 
 .. figure:: img/DP_decisions.png
-   :width: 70%
+   :width: 50%
    :align: center
    
    Figure 4: **DP-Decisions** from ``chp`` example
@@ -64,3 +64,30 @@ As seen above ``chp`` example has only two decisions: **off** and **on** operati
 
 Example_model
 --------------------------------------
+Example-model is a file, which is written in python and should be created specifically for the current system. The main part of it is a function, which describes the transition of the system from one timestep to another one. Figure 5 gives simplified illustration of this transition.  
+
+.. figure:: img/model.png
+   :width: 70%
+   :align: center
+   
+   Figure 5: System transition from timestep **i** to **j**
+   
+System's condition at timestep **i** is defined by an array **X**, which is built from the **DP-States** data in excel-form. The process of **X** formation is fully described in one the next subchapters **Prodyn**. Similarly the condition at **j** is described by **Xj**. Main function of the **example_model** calculates the transition from **i** to **j** in dependance of each desicion from the list of possible ones **U**.    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
