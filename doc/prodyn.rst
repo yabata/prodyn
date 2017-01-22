@@ -11,7 +11,7 @@ prepare_DP
 The goal of this function is a creation of several arrays, which will be used subsequently. The simplified procedure of this creation for 1 and 2 states random examples is presented in the Figure 6.
 
 .. figure:: img/prepare_dp.png
-   :width: 70%
+   :width: 90%
    :align: center
    
    Figure 6: Working principle of prepare_DP function
