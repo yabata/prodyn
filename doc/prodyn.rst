@@ -6,6 +6,7 @@ Prodyn
 ============
 **Prodyn** is an autonomous file, which is written in python and can be used with any example. This is the core and driving force of every dynamic programming implementation. Three main **prodyn's** functions are described below in details.       
 
+.. _prepare_DP-ref:
 prepare_DP 
 ^^^^^^^^
 The goal of **prepare_DP** is a creation of several arrays, which will be used subsequently. The simplified procedure of the creation for 1 and 2 states random examples is presented in the Figure 6.
