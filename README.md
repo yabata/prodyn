@@ -1,12 +1,16 @@
 # prodyn
-Implementation of the dymaic programming algorithm for optimal system control
+Generic implementation of the dynamic programming algorithm for optimal system control
 
 [![Documentation Status](https://readthedocs.org/projects/prodyn/badge/?version=latest)](https://prodyn.readthedocs.org/en/latest/) [![DOI](https://zenodo.org/badge/73300738.svg)](https://zenodo.org/badge/latestdoi/73300738)
 
+The [documenation](http://prodyn.readthedocs.org) is currently in progress.
+
 ## Features
 
-  * mutiple states
-  * ...
+  * prodyn uses the dynamic programming algorithm to calculate the decision seuqence which leads to minimal total costs
+  * prodyn can be apllied to any system function which follows the required structure for inputs and outputs
+  * Forward and backward implementation of the dynamic programming algorithm
+  * Supports systems with multiple state variables
 
 
 ## Get Started
