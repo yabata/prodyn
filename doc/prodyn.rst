@@ -23,7 +23,13 @@ The table with states of the system, which is stored in **DP-States** sheet of :
 
 DP forward
 ^^^^^^^^
-bla-bla
+Current function realizes dynamic programming algorithm in forward direction. Forward means that simulation starts from **t_start** and ends on **t_end**. A diagram, which helps to understand the process inside **DP_forward**, is shown in the Figure 7. 
+
+.. figure:: img/DP_forward.png
+   :width: 90%
+   :align: center
+   
+   Figure 7: Processes inside **DP_forward** function
 
 DP backward
 ^^^^^^^^
