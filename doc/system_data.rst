@@ -2,6 +2,8 @@
 
 .. _system_data:
 
+.. _system_data-ref:
+
 System Data
 ========================
 **System_data** is a file in excel-form. It stores an information about a system, which operation should be controlled in an optimal way. All data is split between four sheets: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this sheet is described below. 
@@ -19,6 +21,8 @@ A series of values for parameters, which described the system, is shown here. Va
 Constants
 ^^^^^^^^ 
 This sheet keeps all values for parameters, which doesn't change during any operation of the system. 
+
+.. _DP-States-ref:
 
 DP-States
 ^^^^^^^^
