@@ -22,8 +22,6 @@ Constants
 ^^^^^^^^ 
 This sheet keeps all values for parameters, which doesn't change during any operation of the system. 
 
-.. _DPStates-ref:
-
 DP-States
 ^^^^^^^^
 The part of the system, which operation should be optimized, is characterized by a number of states. Each state has min, max allowable values and number of steps between them. All these data is stored in **DP-States** sheet. **DP-States** for ``chp`` example is shown in the Figure 3.   
