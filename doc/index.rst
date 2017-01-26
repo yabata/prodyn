@@ -30,10 +30,10 @@ This documentation contains the following pages:
    :maxdepth: 1
 
    overview
-   example_data
-   example_model
+   system_data
+   system_model
    prodyn
-   run_example
+   run_system
    examples
    
 

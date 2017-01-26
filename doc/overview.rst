@@ -14,7 +14,7 @@ Simplified diagram of the process and connection between documents involved in i
    
    Figure 1: Scheme of the dynamic programming implementation
    
-According to the diagram any implemetation consists of four files. Three of them (example_data, example_model and run_example) are specified and should be created for each current example. The fourth one (prodyn) is autonomous and can be used with any example without modifications. 
+According to the diagram any implemetation consists of four files. Three of them (system_data, system_model and run_system) are specified and should be created for each current example. The fourth one (prodyn) is autonomous and can be used with any example without modifications. 
 
 
 

@@ -1,8 +1,8 @@
 .. currentmodule:: prodyn
 
-.. _run_example:
+.. _run_system:
 
-Run_example
+Run System
 ============
 
 
