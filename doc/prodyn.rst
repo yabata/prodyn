@@ -45,7 +45,7 @@ can't achieve.
 	The way **U** influences on the system, value of **costs** and possible **penalties** are always described in :ref:`system_model <system_model>`. Due to this information **prodyn**
 	knows how to make the transition from one step to another one for any possible condition of the system. 
 
-In the Figure 7 the transition for **0th** and **2nd** sytem's condition from timestep **i** to timestep **j** is shown. An idea of **penalty** is shown very well, **u2** is applied
+In the Figure 7 the transition for **0th** and **2nd** sytem's condition from timestep **i** to timestep **j** is shown. An idea of **penalty** is clarified very well, where **u2** is applied
 on the **2nd** condition. **[1	2]** is forced by **u2** to be **[2	2]**, which is impossible. In such way **prodyn** runs the system through the whole timesteps until **t_end** is reached.
 The one and only return of the **prodyn** is called **Data**, which structure is presented in the Figure 8.  
 
@@ -55,8 +55,15 @@ The one and only return of the **prodyn** is called **Data**, which structure is
    
    Figure 8: **Data** - return of the **prodyn**        
 
-
+**Data** is a pandas dataframe with two indices.**Xidx_end** represents system's conditions at the end of last timestep and **t** collects all timesteps. With **Data** we can see which
+decisions should be applied to the system on each timestep for achieving the desired condition at the end of simulation. There are also other system's parameters, which help to analyze the results of simulation    
 
 
 DP backward
 ^^^^^^^^
+**DP_backward** realizes dynamic programming algorithm in a same way as **DP_forward** does, but in the opposite direction. 
+Simulation starts from **t_end** and goes backward until **t_start** will be reached.  
+
+
+
+
