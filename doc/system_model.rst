@@ -2,6 +2,8 @@
 
 .. _system_model:
 
+.. _system_model-ref:
+
 System Model
 ========================
 **System_model** is a file, which is written in python and should be created specifically for the current system. The main part of it is a function, which describes the transition of the system from one timestep to another one. Figure 5 gives simplified illustration of this transition.  
