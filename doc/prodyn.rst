@@ -19,6 +19,7 @@ The goal of **prepare_DP** is a creation of several arrays, which will be used s
    Figure 6: Working principle of **prepare_DP** function
    
 The table with states of the system, which is stored in **DP-States** sheet of :ref:`system_data <system_data>`, plays a role of input for the **prepare_DP**. Three new arrays are the main returns of the function:
+	
 	* **X** is an array containing every possible condition of the system. It's size depends on the number of system's states. For example, any  condition of the system with 2 states is always characterized by two variables and **X** is, consequently, 2d. 
 	* **Xidx** stores numbers corresponded to every system's condition. This array is always 1-d.
 	* **XX** is an array of arrays, from which **X** is built. In other words, **X** is the cartesian product of **XX**.       
@@ -45,14 +46,14 @@ can't achieve.
 	knows how to make the transition from one step to another one for any possible condition of the system. 
 
 In the Figure 7 the transition for **0th** and **2nd** sytem's condition from timestep **i** to timestep **j** is shown. An idea of **penalty** is shown very well, **u2** is applied
-on the **2nd** condition. **[1	2]** is forced by **u2** to be **[2	2]**, which is impossible. In such way *prodyn* runs the system through the whole timesteps until *t_end* is reached.
-The one and only return of the *prodyn* is called *Data*, which structure is presented in the Figure 8.  
+on the **2nd** condition. **[1	2]** is forced by **u2** to be **[2	2]**, which is impossible. In such way **prodyn** runs the system through the whole timesteps until **t_end** is reached.
+The one and only return of the **prodyn** is called **Data**, which structure is presented in the Figure 8.  
 
 .. figure:: img/data.png
    :width: 90%
    :align: center
    
-   Figure 8: *Data* - return of the *prodyn*        
+   Figure 8: **Data** - return of the **prodyn**        
 
 
 
