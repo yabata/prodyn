@@ -55,7 +55,7 @@ The one and only return of the **prodyn** is called **Data**, which structure is
    
    Figure 8: **Data** - return of the **prodyn**        
 
-**Data** is a pandas dataframe with two indices.**Xidx_end** represents system's conditions at the end of last timestep and **t** collects all timesteps. With **Data** we can see which
+**Data** is a pandas dataframe with two indices. **Xidx_end** represents system's conditions at the end of last timestep and **t** collects all timesteps. With **Data** we can see which
 decisions should be applied to the system on each timestep for achieving the desired condition at the end of simulation. There are also other system's parameters, which help to analyze the results of simulation    
 
 
