@@ -8,12 +8,12 @@ Run System
 when simulation of the system with dynamic programming algorithm is finished, an optimal way of control it is searched.
 All parameters, which shows the most optimal path (the cheapest path or the path with empty storage 
 at the last timestep), are extracted from the **Data** and plotted for **results** visualisation. The procedure is 
-illustrated in the Figure 9.
+illustrated in the Figure 10.
 
 .. figure:: img/run_system.png
    :width: 90%
    :align: center
    
-   Figure 9: The procedure of achieving results   
+   Figure 10: The procedure of achieving results   
 
 
