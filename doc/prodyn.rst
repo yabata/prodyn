@@ -10,13 +10,13 @@ Prodyn
 
 prepare DP 
 ^^^^^^^^
-The goal of **prepare_DP** is a creation of several arrays, which will be used subsequently. The simplified procedure of the creation for 1 and 2 states random examples is presented in the Figure 6.
+The goal of **prepare_DP** is a creation of several arrays, which will be used subsequently. The simplified procedure of the creation for 1 and 2 states random examples is presented in the Figure 7.
 
 .. figure:: img/prepare_dp.png
    :width: 90%
    :align: center
    
-   Figure 6: Working principle of **prepare_DP** function
+   Figure 7: Working principle of **prepare_DP** function
    
 The table with states of the system, which is stored in **DP-States** sheet of :ref:`system_data <system_data>`, plays a role of input for the **prepare_DP**. Three new arrays are the main returns of the function:
 	
@@ -27,16 +27,16 @@ The table with states of the system, which is stored in **DP-States** sheet of :
 
 DP forward
 ^^^^^^^^
-Current function realizes dynamic programming algorithm in forward direction. Forward means that simulation starts from **t_start** and ends on **t_end**. A diagram, which helps to understand the process inside **DP_forward**, is shown in the Figure 7. 
+Current function realizes dynamic programming algorithm in forward direction. Forward means that simulation starts from **t_start** and ends on **t_end**. A diagram, which helps to understand the process inside **DP_forward**, is shown in the Figure 8. 
 
 .. figure:: img/DP_forward.png
    :width: 90%
    :align: center
    
-   Figure 7: Processes inside **DP_forward** function
+   Figure 8: Processes inside **DP_forward** function
 
 Let's imagine, that we have arbitrary system with 2 states. It has 4 possible conditions, all of them are defined by **X**. **U** contains only two possible decisions **{u1; u2}**, their influence
-on the system's condition and their **costs** are described at the top side of Figure 7. **Penalty** is an additional cost for the transition in cases, where system is pushed by **u1** or **u2** to the condition, which system 
+on the system's condition and their **costs** are described at the top side of Figure 8. **Penalty** is an additional cost for the transition in cases, where system is pushed by **u1** or **u2** to the condition, which system 
 can't achieve. 
 
 .. note::
@@ -45,15 +45,15 @@ can't achieve.
 	The way **U** influences on the system, value of **costs** and possible **penalties** are always described in :ref:`system_model <system_model>`. Due to this information **prodyn**
 	knows how to make the transition from one step to another one for any possible condition of the system. 
 
-In the Figure 7 the transition for **0th** and **2nd** sytem's condition from timestep **i** to timestep **j** is shown. An idea of **penalty** is clarified very well, where **u2** is applied
+In the Figure 8 the transition for **0th** and **2nd** sytem's condition from timestep **i** to timestep **j** is shown. An idea of **penalty** is clarified very well, where **u2** is applied
 on the **2nd** condition. **[1	2]** is forced by **u2** to be **[2	2]**, which is impossible. In such way **prodyn** runs the system through the whole timesteps until **t_end** is reached.
-The one and only return of the **prodyn** is called **Data**, which structure is presented in the Figure 8.  
+The one and only return of the **prodyn** is called **Data**, which structure is presented in the Figure 9.  
 
 .. figure:: img/data.png
    :width: 90%
    :align: center
    
-   Figure 8: **Data** - return of the **prodyn**        
+   Figure 9: **Data** - return of the **prodyn**        
 
 **Data** is a pandas dataframe with two indices. **Xidx_end** represents system's conditions at the end of last timestep and **t** collects all timesteps. With **Data** we can see which
 decisions should be applied to the system on each timestep for achieving the desired condition at the end of simulation. There are also other system's parameters, which help to analyze the results of simulation    
