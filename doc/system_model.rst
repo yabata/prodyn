@@ -17,7 +17,7 @@ System Model
 System's condition at timestep **i** is defined by an array **X**, which is built from the **DP-States** data in excel-form. The process of **X** formation is fully described in one of the next subchapters :ref:`prepareDP <prepareDP-ref>`. Main function of the **system_model** calculates the transition from **i** to **j** in dependance of each decision from the list of possible ones **U**. Results of the calculation are an array **Xj**, which describes the condition of the system at timestep **j**, and the **cost** of the transition for each possible decision from **U**.
 
 For your own implementation current function **system_model**, which characterizes the transition from **i** to **j**, should be
-written. Group of fixed inputs and outputs for it is presented in the Figure 6. 
+written. Groups of fixed inputs and outputs of the function are presented in the Figure 6. 
 
 .. figure:: img/system_model_general.png
    :width: 90%
@@ -28,11 +28,11 @@ written. Group of fixed inputs and outputs for it is presented in the Figure 6.
 **Inputs** of the **system_model** are: 
   
 	* **u** - decision from the possible ones in list **U**.
-   * **x** - array containing any possible condition of the system.
-   * **t** - actual timestep **i**.
-   * **cst** - constants needed for calculation, which are taken from **Constants** in excel file **system_data**.
-   * **srs** - values of needed timeseries taken from **Time-Series**.
-   * **Data** - pandas dataframe, which keeps infromation about previous transitions. This is main return of the **prodyn** file.
+   	* **x** - array containing any possible condition of the system.
+   	* **t** - actual timestep **i**.
+   	* **cst** - constants needed for calculation, which are taken from **Constants** in excel file **system_data**.
+   	* **srs** - values of needed timeseries taken from **Time-Series**.
+   	* **Data** - pandas dataframe, which keeps infromation about previous transitions. This is main return of the **prodyn** file.
    
 **Returns** of the **system_model** are:
    
