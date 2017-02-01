@@ -25,16 +25,16 @@ written. Group of fixed inputs and outputs for it is presented in the Figure 6.
    
    Figure 6: System transition from timestep **i** to **j**
    
- **Inputs** of the **system_model** are: 
- 
-   * **u** - decision from the possible ones in list **U**.
+**Inputs** of the **system_model** are: 
+  
+	* **u** - decision from the possible ones in list **U**.
    * **x** - array containing any possible condition of the system.
    * **t** - actual timestep **i**.
    * **cst** - constants needed for calculation, which are taken from **Constants** in excel file **system_data**.
    * **srs** - values of needed timeseries taken from **Time-Series**.
    * **Data** - pandas dataframe, which keeps infromation about previous transitions. This is main return of the **prodyn** file.
    
-   **Returns** of the **system_model** are:
+**Returns** of the **system_model** are:
    
       * **cost** - costs of the transition from **i** to **j**.
       * **x_j** - array with condition of the system at timestep **j**, which is formed due to decision **u**.
