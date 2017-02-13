@@ -59,11 +59,11 @@ def system_model(u,x,t,cst,Srs,Data):
 	elif u == 'charge':
 		
 		if res>0:
-			#charging is not possible for negative residual load -> penalty costs
+			#charging is not possible for positive residual load -> penalty costs
 			penalty_costs = 999
 			x_j = x #x_j has to be defined
 		else:
-			bat = np.ones(l)*np.min([cst['P_max'],-res]) # charging power is negative residual load (unless it is not greater than maximum battery power)
+			bat = np.ones(l)*np.min([cst['P_max'],-res]) # charging power is positive residual load (unless it is not greater than maximum battery power)
 			penalty_costs = (x==xmax)*999	# charging is not possible fo a full storage (x==xmax) -> penalty costs
 			
 			x_j = x + bat #next state (energy content) after charging
@@ -79,7 +79,7 @@ def system_model(u,x,t,cst,Srs,Data):
 	#Discharge
 	elif u == 'discharge':
 		if res<0:
-			#discharging is not possible for positive residual load -> penalty costs
+			#discharging is not possible for negative residual load -> penalty costs
 			penalty_costs = 999
 			x_j = x #x_j has to be defined
 		else:
