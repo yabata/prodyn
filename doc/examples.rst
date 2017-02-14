@@ -44,5 +44,16 @@ Grid, gas-boiler, chp power plant, battery and heat storage are components of th
    :align: center
    
    Figure 13: Illustration of the **chp** example
+   
+PV Storage
+^^^^^^^^
+Photovoltaic system with storage form the system for covering given electrical demand. Energy content of the storage is the only state of the system. List **U** contains three possible decisions. With **normal** system operates without participation of the storage. Possible surplus of the produced by pv power can be saved in the storage with **charge** decision. With **discharge** system tries to cover the residual demand by stored energy. After each possible system's decision **grid load** is checked. This residual power is covered by or fed into the grid. The main goal is to find the result, where the storage is empty at the end. Illustration of the current example is presented in the Figure 14.       
 
+.. figure:: img/pv_storage.png
+   :width: 90%
+   :align: center
+   
+   Figure 14: Illustration of the **pv_storage** example
+   
+**Pv_storage_model**, which describes the transition from **i** to **j** according to each possible decision **u**, is written in two ways. In first case the transition is applied for the whole **array X**, which characterizes the system. In the second case - for each possible condition of **X**. Calculation for each condition and jump from one to another are realized inside the **loop**.     
 
