@@ -13,7 +13,7 @@ def read_data(file):
 	return cst,srs,U,states
 
 	
-def system_model(u,x,t,cst,Srs,Data):
+def pvstorage_model(u,x,t,cst,Srs,Data):
 	"""Simulate actual timestep for decision u and all states x
 
 	Calculate the costs c for actual timestep i
@@ -66,13 +66,13 @@ def system_model(u,x,t,cst,Srs,Data):
 		elif u == 'charge':
 			
 			if res>0:
-				#charging is not possible for negative residual load -> penalty costs
+				#charging is not possible for positive residual load -> penalty costs
 				penalty_costs = 999
 			elif xi == xmax:
-				penalty_costs = 999# charging is not possible fo a full storage (x==xmax) -> penalty costs
+				penalty_costs = 999# charging is not possible for a full storage (x==xmax) -> penalty costs
 			else:
 
-				bat[i] = np.min([cst['P_max'],-res]) # charging power is negative residual load (unless it is not greater than maximum battery power)
+				bat[i] = np.min([cst['P_max'],-res]) # charging power is positive residual load (unless it is not greater than maximum battery power)
 				x_j[i] = xi + bat[i] #next state (energy content) after charging
 				
 				if x_j[i]>xmax:
@@ -85,10 +85,10 @@ def system_model(u,x,t,cst,Srs,Data):
 		#Discharge
 		elif u == 'discharge':
 			if res<0:
-				#discharging is not possible for positive residual load -> penalty costs
+				#discharging is not possible for negative residual load -> penalty costs
 				penalty_costs = 999
 			elif xi == xmin:
-				penalty_costs = 999 #discharging is not possible fo a empty storage (x==xmin) -> penalty costs
+				penalty_costs = 999 #discharging is not possible for a empty storage (x==xmin) -> penalty costs
 			else:
 			
 				bat[i] = np.max([-cst['P_max'],-res]) # discharging power is negative residual load (unless it is not greater than maximum battery power)

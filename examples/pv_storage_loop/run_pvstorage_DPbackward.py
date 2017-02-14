@@ -17,7 +17,7 @@ file = 'pvstorage_data.xlsx'
 cst,srs,U,states = model.read_data(file)
 
 #import system model function
-system=model.system_model
+system=model.pvstorage_model
 
 #timesteps used
 timesteps=np.arange(1,49)
