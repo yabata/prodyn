@@ -32,7 +32,7 @@ written. Groups of fixed inputs and outputs of the function are presented in the
    	* **t** - actual timestep **i**.
    	* **cst** - constants needed for calculation, which are taken from **Constants** in excel file **system_data**.
    	* **srs** - values of needed timeseries taken from **Time-Series**.
-   	* **Data** - pandas dataframe, which keeps infromation about previous transitions. This is main return of the **prodyn** file.
+   	* **Data** - pandas dataframe, which keeps information about previous transitions. This is main return of the **prodyn** file.
    
 **Returns** of the **system_model** are:
    
