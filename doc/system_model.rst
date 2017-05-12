@@ -16,7 +16,7 @@ System Model
    
 System's condition at timestep **i** is defined by an array **X**, which is built from the **DP-States** data. The process of **X** formation is fully described in one of the next subchapters :ref:`prepareDP <prepareDP-ref>`. **System** function calculates the transition from **i** to **j** in dependance of each decision from the list of possible ones **U**. Results of the calculation are an array **Xj**, which describes the condition of the system at timestep **j**, and the **cost** of the transition for each possible decision from **U**.
 
-For your own implementation **system**, which characterizes the transition from **i** to **j**, should be
+For your own implementation your own **system** function, which characterizes the transition from **i** to **j**, should be
 written. Groups of fixed inputs and outputs of this function are presented in the Figure 6. 
 
 .. figure:: img/system_model_general.png
