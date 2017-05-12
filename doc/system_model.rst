@@ -47,8 +47,8 @@ The remaining function **read_data** is responsible for reading **system_data** 
 	
 	Regardless of **system_data** format and it's possible absence **cst**, **srs**, **U** and **states** must always be identified according to the following standarts:
 
-	* **cst**, **srs** and **states** - Pandas Data Frames;
-	* **U** - 1-d numpy array.
+		* **cst**, **srs** and **states** - Pandas Data Frames;
+		* **U** - 1-d numpy array.
 
 
 
