@@ -11,7 +11,7 @@ System Data
 .. note::
 
 	
-	The form of **System_data** doesn't have to be always excel. Other formats are also possible. 
+	**System_data** doesn't have to be always written in excel-form. Other formats are also possible. 
 
 Time-Series
 ^^^^^^^^
