@@ -9,6 +9,9 @@ The examples given in this chapter show how to implement dynamic programming alg
 
 Building
 ^^^^^^^^
+
+Description
+"""""""""""
 A system in **building** example contains a model of the real building (pre-trained Neural Network) and a heat pump. The goal of the optimization is to keep room temperature **Troom** inside the range of allowed values **[Tmin; Tmax]** in a cost-efficient way.
 Simulation covers one day (19-44 hours) with 15 min time resolution. The picture in the Figure 11 visualizes current system.
 
@@ -17,7 +20,11 @@ Simulation covers one day (19-44 hours) with 15 min time resolution. The picture
    :align: center
    
    Figure 11: Illustration of the **building** example
- 
+   
+Code Comments
+"""""""""""
+bla-bla
+
 Building with Storage
 ^^^^^^^^
 The presence of the **heat storage** makes this system different to the **building**. Due to this **building_with_storage** has 4 decisions and 2 states (the room temperature **Troom** and energy content of the storage **E**). The goal and period of simulation are identical to the **building** example. In the Figure 12 schematic picture the **building_with_storage** system is given.
