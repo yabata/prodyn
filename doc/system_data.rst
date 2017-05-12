@@ -8,6 +8,11 @@ System Data
 ========================
 **System_data** stores an information about a system, which operation should be controlled in an optimal way. All data is split between four parts: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this part from ``chp_data`` written in excel-form is described below. 
 
+.. note::
+
+	
+	The form of **System_data** doesn't have to be always excel. Other formats are also possible. 
+
 Time-Series
 ^^^^^^^^
 A series of values for parameters, which described the system, is shown here. Values are obtained at successive times and with equal intervals between them. Small part of **Time-Series** from ``chp_data`` is illustrated in the Figure 2.   
