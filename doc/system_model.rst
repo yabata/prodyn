@@ -40,7 +40,16 @@ written. Groups of fixed inputs and outputs of this function are presented in th
       * **x_j** - array with condition of the system at timestep **j**, which is formed due to decision **u**.
       * **data** - intermediate pandas dataframe containing additional information about the transition from **i** to **j**. Needed for **Data** formation in **prodyn**.  
       
-The remaining function **read_data** is responsible for reading **system_data** and returning the following parameters, which partially form the group of **inputs** of the **system**: **cst**, **srs**, **U** and **states**. **Read_data** for all of the examples presented in the documentation is written for reading **system_data** in excel-from. For other formats **read_data** should be rewritten. However, the form and number of the returns (**cst**, **srs**, **U** and **states**) must be kept the same.    
+The remaining function **read_data** is responsible for reading **system_data** and returning the following parameters, which partially form the group of **inputs** of the **system**: **cst**, **srs**, **U** and **states**. **Read_data** for all of the examples presented in the documentation is written for reading **system_data** in excel-from. However, the format or form of **system_data** can be absolutely various. In these cases **read_data** should be rewritten. 
+
+.. note::
+
+	
+	Regardless of **system_data** format and it's possible absence **cst**, **srs**, **U** and **states** must always be identified according to the following standarts:
+	* **cst**, **srs** and **states** - Pandas Data Frames;
+	* **U** - 1-d numpa array.
+
+
 
 
 
