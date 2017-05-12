@@ -6,7 +6,7 @@
 
 System Data
 ========================
-**System_data** is a file in excel-form. It stores an information about a system, which operation should be controlled in an optimal way. All data is split between four sheets: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this sheet is described below. 
+**System_data** stores an information about a system, which operation should be controlled in an optimal way. All data is split between four parts: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this part from ``chp_data`` written in excel-form is described below. 
 
 Time-Series
 ^^^^^^^^
