@@ -6,12 +6,12 @@
 
 System Data
 ========================
-**System_data** stores an information about a system, which operation should be controlled in an optimal way. All data is split between four parts: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this part from ``chp_data`` written in excel-form is described below. 
+**System_data** stores an information about a system, which operation should be controlled in an optimal way. All data is split between four parts: **Time-Series**, **Constants**, **DP-States** and **DP-Decisions**. Each of this part is described below. ``Chp_data`` written in excel-form is taken as an example.   
 
 .. note::
 
 	
-	**System_data** doesn't have to be always written in excel-form. Other formats are also possible. 
+	**System_data** doesn't have to be always written in excel-form. Other formats are also possible. In addition, **system_data** doesn't have to exist in the form of file. It can be typed by the user through the code or interface and so on. 
 
 Time-Series
 ^^^^^^^^
