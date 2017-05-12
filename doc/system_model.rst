@@ -19,7 +19,7 @@ System's condition at timestep **i** is defined by an array **X**, which is buil
 For your own implementation your own **system** function, which characterizes the transition from **i** to **j**, should be
 written. Groups of fixed inputs and outputs of this function are presented in the Figure 6. 
 
-.. figure:: img/system_model_general.png
+.. figure:: img/system_general.png
    :width: 90%
    :align: center
    
