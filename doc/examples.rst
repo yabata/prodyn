@@ -5,7 +5,7 @@
 Examples
 ============
 
-The examples given in this chapter show how to implement dynamic programming algorithm. Here only brief description of each of the system is written. Very detailed comments through all codes will help to achieve deeper and detailed understanding. Results of optimal system control can be seen after simulations of the **system_example** codes.    
+The examples given in this chapter show how to implement dynamic programming algorithm. Here only brief description of each of the system is written. Very detailed comments through all codes will help to achieve deeper and detailed understanding. Results of optimal system control can be seen after simulations of the **run_system** codes.    
 
 Building
 ^^^^^^^^
@@ -21,8 +21,22 @@ Simulation covers one day (19-44 hours) with 15 min time resolution. The picture
    
    Figure 11: Illustration of the **building** example
    
-Code Comments
-"""""""""""
+run_building_forward.py
+"""""""""""""""""""""""
+Here the script of the ``run_building_forward.py`` is explained step by step for better understanding. 
+
+::
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pyrenn as prn
+    
+Three packages are included. 
+
+* `numpy`_ is the fundamental package for scientific computing with Python.
+
+building.model.py
+"""""""""""""""""
 bla-bla
 
 Building with Storage
