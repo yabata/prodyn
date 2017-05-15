@@ -33,7 +33,7 @@ Here the script of the ``run_building_forward.py`` is explained step by step for
     
 Three packages are included: 
 
-* `numpy`(https://docs.scipy.org/doc/numpy-dev/user/index.html) is the fundamental package for scientific computing with Python;
+* [`numpy`](https://docs.scipy.org/doc/numpy-dev/user/index.html) is the fundamental package for scientific computing with Python;
 
 building.model.py
 """""""""""""""""
