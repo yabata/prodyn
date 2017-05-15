@@ -31,9 +31,9 @@ Here the script of the ``run_building_forward.py`` is explained step by step for
     import matplotlib.pyplot as plt
     import pyrenn as prn
     
-Three packages are included. 
+Three packages are included: 
 
-* `numpy`_ is the fundamental package for scientific computing with Python.
+* `numpy`(https://docs.scipy.org/doc/numpy-dev/user/index.html) is the fundamental package for scientific computing with Python;
 
 building.model.py
 """""""""""""""""
