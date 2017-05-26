@@ -23,7 +23,7 @@ Simulation covers one day (19-44 hours) with 15 min time resolution. The picture
    
 run_building_forward.py
 """""""""""""""""""""""
-Here the script of the ``run_building_forward.py`` is explained step by step for better understanding. 
+Here the script of the ``run_building_forward.py`` (one from four dynamic programming files) is explained step by step for better understanding. 
 
 ::
 
@@ -42,13 +42,13 @@ Three packages are included:
 	import building_model as model
 	import prodyn as prd
 	
-Then **building_model** and **prodyn**, which are two files of the dynamic programming implementation, are imported. 
+Then **building_model** and **prodyn** (two other files of dynamic programming) are imported. They assigned as **model** and **prd** respectively. 
 
 ::
 
 	file = 'building_data.xlsx'
 	
-Gives the path to the excel-file containg data about the current system. This is the third file **system_data**.  
+Gives the path to the excel-file **building_data** containing data about the current system. This is the last file of dynamic programming.  
 
 ::
 
@@ -57,13 +57,51 @@ Gives the path to the excel-file containg data about the current system. This is
 	srs['P_th'] = 0
 	srs['T_room'] = 20
 	
-Defines constants **cst**, timeseries **srs**, list of possible decisions **U** and parameters **states**, which characterize each possible system's state. To timeseries **srs** written from **building_data** some extra data is added. 
+Defines constants **cst**, timeseries **srs**, list of possible decisions **U** and parameters **states**, which characterize each possible system's state, by reading the **building_data** file. Process of reading is realized due to **read_data** function hidden in the **building_model** (model) file. To timeseries **srs** written from **building_data** some extra data is added. 
 
 ::
 
 	timesteps=np.arange(cst['t_start'],cst['t_end'])
 	
-Sets a timeframe on which optimization will be realized. 	
+Sets a timeframe on which optimization will be realized. 
+
+::
+
+	net = prn.loadNN('NN_building.csv') 
+	cst['net'] = net
+	
+Defines a model **net** of the real building (pre-trained Neural Network) and saves it to the constants **cst**. 
+
+::
+
+	xsteps=np.prod(states['xsteps'].values)
+	J0 = np.zeros(xsteps)
+	idx = prd.find_index(np.array([20]),states)
+	J0[idx] = -9999.9
+	
+Creates an array **J0** of initial terminal costs. **J0** will be changed from transition to transition according to list of possible decisions **U** and will keep all costs. Due to stored infromation in **J0** optimal control of the **building** can be found. 
+
+::
+
+	idx = prd.find_index(np.array([20]),states)
+	J0[idx] = -9999.9
+	
+Shifts the initial postition to index with temperature equaled to 20 degrees. 
+
+::
+
+	system=model.building
+	
+Define function **building** from **building_model** for characterization the transition from **i** timestep to **j**.
+
+::
+
+	result = prd.DP_forward(states,U,timesteps,cst,srs,system,J0=J0,verbose=True,t_verbose=5)
+	i_mincost = result.loc[cst['t_end']-1]['J'].idxmin()
+	opt_result = result.xs(i_mincost,level='Xidx_end')
+	
+
+	
 
 
 building.model.py
