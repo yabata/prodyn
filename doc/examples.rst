@@ -33,7 +33,38 @@ Here the script of the ``run_building_forward.py`` is explained step by step for
     
 Three packages are included: 
 
-* [`numpy`]:https://docs.scipy.org/doc/numpy-dev/user/index.html is the fundamental package for scientific computing with Python;
+* `numpy`_ is the fundamental package for scientific computing with Python;
+* `matplotlib.pyplot`_ is a plotting library which allows present results in a diagram form quite easily;
+* `pyrenn`_ is a recurrent neural network toolbox for Python. 
+
+::
+
+	import building_model as model
+	import prodyn as prd
+	
+Then **building_model** and **prodyn**, which are two files of the dynamic programming implementation, are imported. 
+
+::
+
+	file = 'building_data.xlsx'
+	
+Gives the path to the excel-file containg data about the current system. This is the third file **system_data**.  
+
+::
+
+	cst,srs,U,states = model.read_data(file)
+	srs['massflow'] = 0
+	srs['P_th'] = 0
+	srs['T_room'] = 20
+	
+Defines constants **cst**, timeseries **srs**, list of possible decisions **U** and parameters **states**, which characterize each possible system's state. To timeseries **srs** written from **building_data** some extra data is added. 
+
+::
+
+	timesteps=np.arange(cst['t_start'],cst['t_end'])
+	
+Sets a timeframe on which optimization will be realized. 	
+
 
 building.model.py
 """""""""""""""""
@@ -78,3 +109,8 @@ Photovoltaic system with storage form the system for covering given electrical d
    
 **Pv_storage_model**, which describes the transition from **i** to **j** according to each possible decision **u**, is written in two ways. In first case the transition is applied for the whole **array X**, which characterizes the system. In the second case - for each possible condition of **X**. Calculation for each condition and jump from one to another are realized inside the **loop**.     
 
+
+
+.. _numpy: https://docs.scipy.org/doc/numpy-dev/user/index.html
+.. _matplotlib.pyplot: https://matplotlib.org/index.html
+.. _pyrenn: https://github.com/yabata/pyrenn
