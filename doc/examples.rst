@@ -211,6 +211,35 @@ Builds the input array **P** from six inputs for the current timestep **t**.
 	
 Creates 5 inputs for the initial input array **P0**, which is also needed for the NN's usage. The length of each input is equaled to the chosen **delay** at the beginning of the function. 
 
+::
+
+	x_j = np.zeros(l)
+	P_th = np.zeros(l)
+	costx = np.zeros(l)
+	
+Defines array **x_j** for the **building** states after the transition, array **P_th** for thermal power given to the **building** from heat pump and array **costx**, which will contain costs for transition from each **building** state in **x** to **x_j** accroding to current decision **u**.
+
+::
+
+	for i,xi in enumerate(x):
+        	#prepare 6th input for P0 and 2 outputs for Y0
+        	if t-delay<cst['t_start']:
+            		#take all values for P0 and Y0 from timeseries            
+            		if Data is None or t==cst['t_start']:
+                		T_room0 = Srs.loc[t-delay:t-1]['T_room'].values.copy()
+                		P_th0 = Srs.loc[t-delay:t-1]['P_th'].values.copy()
+                		massflow0 = Srs.loc[t-delay:t-1]['massflow'].values.copy()
+                        #take part of values from timeseries and part from big Data            
+            		else:
+                		tx = t-cst['t_start']
+                		T_room0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['T_room'].values.copy(),Data.loc[t-tx-1:t1].xs(i,level='Xidx_end')['T_room'].values.copy()])
+                		P_th0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['P_th'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()])
+                		massflow0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['massflow'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['massflow'].values.copy()])
+                #take all values for P0 and Y0 from big Data
+        	else:
+            		T_room0 =Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['T_room'].values.copy()
+            		P_th0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()
+            		massflow0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['massflow'].values.copy() 
 
 
 
