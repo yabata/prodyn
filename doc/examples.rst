@@ -178,68 +178,73 @@ Opens function **building** responsible for the system transition. Also identifi
 
 ::
 
-	hour = Srs.loc[t]['hour']
-	solar = Srs.loc[t]['solar']
-	T_amb = Srs.loc[t]['T_amb']
-	user  = Srs.loc[t]['use_room']
-	T_inlet = Srs.loc[t]['T_inlet']
+		hour = Srs.loc[t]['hour']
+		solar = Srs.loc[t]['solar']
+		T_amb = Srs.loc[t]['T_amb']
+		user  = Srs.loc[t]['use_room']
+		T_inlet = Srs.loc[t]['T_inlet']
 	
 Creates 5 inputs for the input array **P** required for the NN's usage. 
 
 ::
 
-	if u=='heating on':
-		massflow = cst['massflow']
-	elif u=='heating off':
-		massflow = 0
+		if u=='heating on':
+			massflow = cst['massflow']
+		elif u=='heating off':
+			massflow = 0
 		
 Defines the 6th and the last input of **P** in dependance of the current decision **u**. 
 
 ::
 
-	P = np.array([[hour],[solar],[T_amb],[user],[massflow],[T_inlet]],dtype = np.float)
+		P = np.array([[hour],[solar],[T_amb],[user],[massflow],[T_inlet]],dtype = np.float)
 	
 Builds the input array **P** from six inputs for the current timestep **t**. 
 
 ::
 
-	hour0 = Srs.loc[t-delay:t-1]['hour'].values.copy()
-	solar0 = Srs.loc[t-delay:t-1]['solar'].values.copy()
-	T_amb0 = Srs.loc[t-delay:t-1]['T_amb'].values.copy()
-	user0  = Srs.loc[t-delay:t-1]['use_room'].values.copy()
-	T_inlet0 = Srs.loc[t-delay:t-1]['T_inlet'].values.copy()
+		hour0 = Srs.loc[t-delay:t-1]['hour'].values.copy()
+		solar0 = Srs.loc[t-delay:t-1]['solar'].values.copy()
+		T_amb0 = Srs.loc[t-delay:t-1]['T_amb'].values.copy()
+		user0  = Srs.loc[t-delay:t-1]['use_room'].values.copy()
+		T_inlet0 = Srs.loc[t-delay:t-1]['T_inlet'].values.copy()
 	
 Creates 5 inputs for the initial input array **P0**, which is also needed for the NN's usage. The length of each input is equaled to the chosen **delay** at the beginning of the function. 
 
 ::
 
-	x_j = np.zeros(l)
-	P_th = np.zeros(l)
-	costx = np.zeros(l)
+		x_j = np.zeros(l)
+		P_th = np.zeros(l)
+		costx = np.zeros(l)
 	
 Defines array **x_j** for the **building** states after the transition, array **P_th** for thermal power given to the **building** from heat pump and array **costx**, which will contain costs for transition from each **building** state in **x** to **x_j** accroding to current decision **u**.
 
 ::
 
-	for i,xi in enumerate(x):
-        	#prepare 6th input for P0 and 2 outputs for Y0
-        	if t-delay<cst['t_start']:
-            		#take all values for P0 and Y0 from timeseries            
-            		if Data is None or t==cst['t_start']:
-                		T_room0 = Srs.loc[t-delay:t-1]['T_room'].values.copy()
-                		P_th0 = Srs.loc[t-delay:t-1]['P_th'].values.copy()
-                		massflow0 = Srs.loc[t-delay:t-1]['massflow'].values.copy()
-                        #take part of values from timeseries and part from big Data            
-            		else:
-                		tx = t-cst['t_start']
-                		T_room0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['T_room'].values.copy(),Data.loc[t-tx-1:t1].xs(i,level='Xidx_end')['T_room'].values.copy()])
-                		P_th0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['P_th'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()])
-                		massflow0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['massflow'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['massflow'].values.copy()])
-                #take all values for P0 and Y0 from big Data
-        	else:
-            		T_room0 =Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['T_room'].values.copy()
-            		P_th0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()
-            		massflow0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['massflow'].values.copy() 
+		for i,xi in enumerate(x):
+        		#prepare 6th input for P0 and 2 outputs for Y0
+        		if t-delay<cst['t_start']:
+            			
+				#take all values for P0 and Y0 from timeseries            
+            			if Data is None or t==cst['t_start']:
+                			T_room0 = Srs.loc[t-delay:t-1]['T_room'].values.copy()
+                			P_th0 = Srs.loc[t-delay:t-1]['P_th'].values.copy()
+                			massflow0 = Srs.loc[t-delay:t-1]['massflow'].values.copy()
+                        	
+				#take part of values from timeseries and part from big Data            
+            			else:
+                			tx = t-cst['t_start']
+                			T_room0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['T_room'].values.copy(),Data.loc[t-tx-1:t1].xs(i,level='Xidx_end')['T_room'].values.copy()])
+                			P_th0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['P_th'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()])
+                			massflow0 = np.concatenate([Srs.loc[t-delay:t-tx-1]['massflow'].values.copy(),Data.loc[t-tx-1:t-1].xs(i,level='Xidx_end')['massflow'].values.copy()])
+                	
+			#take all values for P0 and Y0 from big Data
+        		else:
+				T_room0 =Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['T_room'].values.copy()
+            			P_th0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()
+            			massflow0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['massflow'].values.copy() 
+				
+Loop for every possible state of the **building** from **x** opens. All other strings are responsible for prepairing the 6th input **massflow0** for the input array **P0** and two outputs **T_room0**, **P_th0** for the initial output array **Y0**. In dependance of relation between current timestep **t** and **t_start** (initial timestep, from which optimal **builidng** control should be found) these three parameters are created with values from the timeseries **srs** and **Data**, which keeps all information about the previous transitions. There are three cases for the **massflow0**, **T_room0** and **P_th0** creation. Supporting commentaries in this part split these cases.     				
 
 
 
