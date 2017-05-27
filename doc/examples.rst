@@ -121,7 +121,7 @@ Implements dynamic programming algorithm for the chosen timeframe and saves all 
 	Troom=opt_result['T_room'].values[:-1]
 	Pel=opt_result['P_el'].values[:-1]
 
-Choses parameters, which characterize cost-efficient **building** control system, and extracts them from **opt_result**. **Best_massflow** is a schedule, which shows at which timestep heat pump is switched on and at which switched off. **Pel** defines consumed electrical power, **Troom** - room temperature inside the house, which shouldn't be out of the comfort zone **[Tmin; Tmax]**.   
+Chooses parameters, which characterize cost-efficient **building** control system, and extracts them from **opt_result**. **Best_massflow** is a schedule, which shows at which timestep heat pump is switched on and at which switched off. **Pel** defines consumed electrical power, **Troom** - room temperature inside the house, which shouldn't be out of the comfort zone **[Tmin; Tmax]**.   
 
 ::
 
@@ -166,6 +166,52 @@ Three packages are included:
 	    return cst,srs,U,states
 	    
 **Read_data** reads data about the **building** system from the excel-file and assigns it to different parameters. 
+
+::
+
+	def building(u,x,t,cst,Srs,Data):
+		l = len(x)
+    		delay=4
+    		net = cst['net']
+		
+Opens function **building** responsible for the system transition. Also identifies the length **l** of the array with possible system states **x**, gives a name to the pre-trained Neural Network (NN) **net** and chooses number of timesteps **delay** for the initial input **P0** and output **Y0** needed for the NN's usage.
+
+::
+
+	hour = Srs.loc[t]['hour']
+	solar = Srs.loc[t]['solar']
+	T_amb = Srs.loc[t]['T_amb']
+	user  = Srs.loc[t]['use_room']
+	T_inlet = Srs.loc[t]['T_inlet']
+	
+Creates 5 inputs for the input array **P** required for the NN's usage. 
+
+::
+
+	if u=='heating on':
+		massflow = cst['massflow']
+	elif u=='heating off':
+		massflow = 0
+		
+Defines the 6th and the last input of **P** in dependance of the current decision **u**. 
+
+::
+
+	P = np.array([[hour],[solar],[T_amb],[user],[massflow],[T_inlet]],dtype = np.float)
+	
+Builds the input array **P** from six inputs for the current timestep **t**. 
+
+::
+
+	hour0 = Srs.loc[t-delay:t-1]['hour'].values.copy()
+	solar0 = Srs.loc[t-delay:t-1]['solar'].values.copy()
+	T_amb0 = Srs.loc[t-delay:t-1]['T_amb'].values.copy()
+	user0  = Srs.loc[t-delay:t-1]['use_room'].values.copy()
+	T_inlet0 = Srs.loc[t-delay:t-1]['T_inlet'].values.copy()
+	
+Creates 5 inputs for the initial input array **P0**, which is also needed for the NN's usage. The length of each input is equaled to the chosen **delay** at the beginning of the function. 
+
+
 
 
 
