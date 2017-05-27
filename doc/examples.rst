@@ -158,12 +158,12 @@ Three packages are included:
 ::
 
 	def read_data(file):
-    	    xls = pd.ExcelFile(file)
-	    states = xls.parse('DP-States',index_col=[0])
-	    cst = xls.parse('Constants',index_col=[0])['Value']
-	    srs = xls.parse('Time-Series',index_col=[0])
-	    U = xls.parse('DP-Decisions',index_col=[0])['Decisions'].values
-	    return cst,srs,U,states
+		xls = pd.ExcelFile(file)
+	    	states = xls.parse('DP-States',index_col=[0])
+	    	cst = xls.parse('Constants',index_col=[0])['Value']
+	    	srs = xls.parse('Time-Series',index_col=[0])
+	    	U = xls.parse('DP-Decisions',index_col=[0])['Decisions'].values
+	    	return cst,srs,U,states
 	    
 **Read_data** reads data about the **building** system from the excel-file and assigns it to different parameters. 
 
