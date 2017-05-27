@@ -5,7 +5,9 @@
 Examples
 ============
 
-The examples given in this chapter show how to implement dynamic programming algorithm. Here only brief description of each of the system is written. Very detailed comments through all codes will help to achieve deeper and detailed understanding. Results of optimal system control can be seen after simulations of the **run_system** codes.    
+The examples given in this chapter show how to implement dynamic programming algorithm. First example of the system (**building**) is presented very detailed. For other systems only brief description is given. However, very detailed comments through all codes will help to achieve deeper understanding. Results of optimal system control can be seen after simulations of the **run_system** codes.
+
+
 
 Building
 ^^^^^^^^
@@ -34,7 +36,7 @@ Dynamic Programming algorithm for optimal control of the **building** is realize
    
 run_building_forward.py
 """""""""""""""""""""""
-Here is the script of the ``run_building_forward.py`` (one from four dynamic programming files) is explained step by step for better understanding. 
+There is a script of the ``run_building_forward.py`` (one from four dynamic programming files) is explained step by step for better understanding. 
 
 ::
 
@@ -135,9 +137,39 @@ Sums values for timesteps, which were not involved in the optimization, with tho
    Figure 12: Cost-minimal control of the **building** for keeping **Troom** inside **[Tmin; Tmax]**.  
 
 
-building.model.py
+building_model.py
 """""""""""""""""
-bla-bla
+The script of the ``building_model.py`` is explained step by step for better understanding. 
+
+::
+
+	import pandas as pd
+	import numpy as np
+	import pyrenn as prn
+	import pdb
+	
+Three packages are included: 
+
+* `pandas`_ is a source helping to work with data structure and data analysis; 
+* `numpy`_ is the fundamental package for scientific computing with Python;
+* `pyrenn`_ is a recurrent neural network toolbox for Python;
+* `pdb`_ is a specific module, which allows to debug Python codes.
+
+::
+
+	def read_data(file):
+    	    xls = pd.ExcelFile(file)
+	    states = xls.parse('DP-States',index_col=[0])
+	    cst = xls.parse('Constants',index_col=[0])['Value']
+	    srs = xls.parse('Time-Series',index_col=[0])
+	    U = xls.parse('DP-Decisions',index_col=[0])['Decisions'].values
+	    return cst,srs,U,states
+	    
+**Read_data** reads data about the **building** system from the excel-file and assign it to different parameters. 
+
+
+
+
 
 Building with Storage
 ^^^^^^^^
@@ -183,3 +215,5 @@ Photovoltaic system with storage form the system for covering given electrical d
 .. _numpy: https://docs.scipy.org/doc/numpy-dev/user/index.html
 .. _matplotlib.pyplot: https://matplotlib.org/index.html
 .. _pyrenn: https://github.com/yabata/pyrenn
+.. _pandas: https://pandas.pydata.org/
+.. _pdb: https://docs.python.org/3/library/pdb.html
