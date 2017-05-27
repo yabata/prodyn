@@ -34,7 +34,7 @@ Dynamic Programming algorithm for optimal control of the **building** is realize
    
 run_building_forward.py
 """""""""""""""""""""""
-Here the script of the ``run_building_forward.py`` (one from four dynamic programming files) is explained step by step for better understanding. 
+Here is the script of the ``run_building_forward.py`` (one from four dynamic programming files) is explained step by step for better understanding. 
 
 ::
 
@@ -129,7 +129,7 @@ Choses parameters, which characterize cost-efficient **building** control system
 Sums values for timesteps, which were not involved in the optimization, with those, which were extracted from **opt_result**. The remaining part of the code is responsible for plotting chosen and additional parameters. They are presented in the Figure 12. 
 
 .. figure:: img/building_results.png
-   :width: 90%
+   :width: 100%
    :align: center
    
    Figure 12: Cost-minimal control of the **building** for keeping **Troom** inside **[Tmin; Tmax]**.  
