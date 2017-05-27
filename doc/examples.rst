@@ -165,7 +165,7 @@ Three packages are included:
 	    U = xls.parse('DP-Decisions',index_col=[0])['Decisions'].values
 	    return cst,srs,U,states
 	    
-**Read_data** reads data about the **building** system from the excel-file and assign it to different parameters. 
+**Read_data** reads data about the **building** system from the excel-file and assigns it to different parameters. 
 
 
 
