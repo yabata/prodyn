@@ -244,8 +244,30 @@ Defines array **x_j** for the **building** states after the transition, array **
             			P_th0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['P_th'].values.copy()
             			massflow0 = Data.loc[t-delay:t-1].xs(i,level='Xidx_end')['massflow'].values.copy() 
 				
-Loop for every possible state of the **building** from **x** opens. All other strings are responsible for prepairing the 6th input **massflow0** for the input array **P0** and two outputs **T_room0**, **P_th0** for the initial output array **Y0**. In dependance of relation between current timestep **t** and **t_start** (initial timestep, from which optimal **builidng** control should be found) these three parameters are created with values from the timeseries **srs** and **Data**, which keeps all information about the previous transitions. There are three cases for the **massflow0**, **T_room0** and **P_th0** creation. Supporting commentaries in this part split these cases.     				
+Loop for every possible state of the **building** from **x** opens. All other strings are responsible for prepairing the 6th input **massflow0** for the input array **P0** and two outputs **T_room0**, **P_th0** for the initial output array **Y0**. In dependance of relation between current timestep **t** and **t_start** (initial timestep, from which optimal **builidng** control should be found) these three parameters are created with values from the timeseries **srs** and **Data**, which keeps all information about the previous transitions. There are three cases for the **massflow0**, **T_room0** and **P_th0** creation. Supporting commentaries in this part split these cases. 
 
+::
+
+		T_room0[-1] = xi             
+        	P0 = np.array([hour0,solar0,T_amb0,user0,massflow0,T_inlet0],dtype = np.float)
+        	Y0 = np.array([T_room0,P_th0],dtype = np.float)
+		
+Corrects last value of **T_room0** and builds initial input **P0** and initial output **Y0** arrays. 
+
+::
+
+		if np.any(P0!=P0) or np.any(Y0!=Y0):
+            		#if P0 or Y0 not valid use valid values and apply penalty costs
+            		costx[i] = 1000*10
+            		x_j[i] = xi
+            		P_th[i] = 0
+        	else:
+            		x_j[i],P_th[i] = prn.NNOut(P,net,P0=P0,Y0=Y0)
+        
+        	if x_j[i] != x_j[i] or P_th[i] != P_th[i]:
+            		pdb.set_trace()
+			
+Runs NN for one timestep. Checks if **P0** and **Y0** are valid. Two outputs of the NN usage are array **x_j**, which keeps all possible states of the **building** after transition, and array **P_th**, which stores data about delivered thermal power from the pump to the building. in the case of mistake a Python debugger will be open. Here the loop for every possible state of the **building** from **x** closes. 			
 
 
 
