@@ -217,7 +217,7 @@ Creates 5 inputs for the initial input array **P0**, which is also needed for th
 		P_th = np.zeros(l)
 		costx = np.zeros(l)
 	
-Defines array **x_j** for the **building** states after the transition, array **P_th** for thermal power given to the **building** from heat pump and array **costx**, which will contain costs for transition from each **building** state in **x** to **x_j** accroding to current decision **u**.
+Defines array **x_j** for the **building** states after the transition, array **P_th** for thermal power given to the **building** from heat pump and array **costx**, which will contain penalty costs for transition from each **building** state in **x** to **x_j** according to current decision **u**.
 
 ::
 
@@ -267,11 +267,43 @@ Corrects last value of **T_room0** and builds initial input **P0** and initial o
         	if x_j[i] != x_j[i] or P_th[i] != P_th[i]:
             		pdb.set_trace()
 			
-Runs NN for one timestep. Checks if **P0** and **Y0** are valid. Two outputs of the NN usage are array **x_j**, which keeps all possible states of the **building** after transition, and array **P_th**, which stores data about delivered thermal power from the pump to the building. in the case of mistake a Python debugger will be open. Here the loop for every possible state of the **building** from **x** closes. 			
+Runs NN for one timestep. Checks if **P0** and **Y0** are valid. Two outputs of the NN usage are array **x_j**, which keeps all possible states of the **building** after transition, and array **P_th**, which stores data about delivered thermal power from the pump to the building. In the case of mistake a Python debugger will be open. Here the loop for every possible state of the **building** from **x** closes.
 
+::
 
+	Tmax = Srs.loc[t]['Tmax']
+    	Tmin = Srs.loc[t]['Tmin']    
+   
+   	costx = (x_j>Tmax)*(x_j-Tmax)**2*1000 + (x_j<Tmin)*(Tmin-x_j)**2*1000+costx
+	
+Selects borders for the allowed **T_room** and calculates penalty costs **costx** if any state of **x_j** is out of chosen borders. 
 
+::
 
+	x_j=np.clip(x_j,x[0],x[-1])
+
+Corrects **x_j**. Values smaller than **x[0]** become **x[0]**, and values larger than **x[-1]** become **x[-1]**. 
+
+::
+
+	P_el = P_th*T_inlet/(T_inlet-T_amb)
+    	cost = P_el * Srs.loc[t]['price_elec']*0.25 + costx
+	
+Calculates **cost** of the transition by summing electricity and penalty costs. 
+
+::
+
+	data = pd.DataFrame(index = np.arange(l))
+    	data['P_th'] = P_th
+    	data['P_el'] = P_el
+    	data['T_room'] = x_j
+    	data['massflow'] = massflow
+    	data['cost'] = cost
+    	data['costx'] = costx
+           
+    	return cost, x_j, data
+	
+Defines parameters, which will be put in **data** used in **prodyn** file. 
 
 Building with Storage
 ^^^^^^^^
