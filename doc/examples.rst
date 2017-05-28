@@ -303,7 +303,7 @@ Calculates **cost** of the transition by summing electricity and penalty costs.
            
     	return cost, x_j, data
 	
-Defines parameters, which will be put in **data** used in **prodyn** file. 
+Defines parameters, which will be put in **data** used in **prodyn** file. Returns of the **building** function are costs of the transition **cost**, new array with **building** states **x_j** and **data**. 
 
 Building with Storage
 ^^^^^^^^
