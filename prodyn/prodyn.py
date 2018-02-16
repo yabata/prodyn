@@ -1,63 +1,63 @@
 import pandas as pd
 import numpy as np
-import pdb
 
 def prepare_DP(states):
-	"""
-	Create arrays with discrete values for each DP state
-	
-	Args:
-		states: pandas dataframe where each index represents a state variable
-			xmin: minimum value of the state variable
-			xmax: maximum value of the state variable
-			xstpes: number of discretization steps for this state variable
-			
-	Returns:
-		Xi_val: 2d array containing every state combination of the state variables
-		Xidx: array, which contains indices of discrete values Xi_val
-		XX:	2d array, containing all discretized state variable arrays
-			(Xi_val is the cartesian product of XX)
-		xsteps: number of discretization steps for each state variable
-		columns: columns used in the DataFrames within the DP algorithm (without U)
-		columns_u: columns plus 'U'
-	"""
-	
-	#reading data for building basic arrays
-	num_states = len(states.index)
-	xmin=states['xmin'].values
-	xmax=states['xmax'].values
-	xsteps=states['xsteps'].values
+    """
+    Create arrays with discrete values for each DP state
 
-	#building discretized array for each state variable and save them to XX
-	XX = []
-	for i in range(num_states):
-		X=np.linspace(xmin[i],xmax[i],xsteps[i])
-		XX.append(X)
-		
+    Args:
+        states: pandas dataframe where each index represents a state variable
+            xmin: minimum value of the state variable
+            xmax: maximum value of the state variable
+            xstpes: number of discretization steps for this state variable
+            
+    Returns:
+        Xi_val: 2d array containing every state combination of the state variables
+        Xidx: array, which contains indices of discrete values Xi_val
+        XX:	2d array, containing all discretized state variable arrays
+            (Xi_val is the cartesian product of XX)
+        xsteps: number of discretization steps for each state variable
+        columns: columns used in the DataFrames within the DP algorithm (without U)
+        columns_u: columns plus 'U'
+    """
 
-	#calculating Xi_val, containing every state combination of the state variables
-	#(cartesian product of XX)
-	Xi_val = np.array(pd.tools.util.cartesian_product(XX))
-	if num_states == 1:
-		Xi_val = Xi_val[0]
-	
-	#Index array for Xi_val
-	Xidx = np.arange(xsteps.prod())
+    #reading data for building basic arrays
+    num_states = len(states.index)
+    xmin=states['xmin'].values
+    xmax=states['xmax'].values
+    xsteps=states['xsteps'].values
 
-	# create list with column names for the DataFrames
-	columns = ['J'] # insert J = total costs
-	for i in range(num_states):
-		columns = columns + ['Xi_val_'+states.index[i]] # For each state variable i, add a "Xi_val_statename" column
-	columns = columns + ['Xidx','Xidxj'] #add columns "Xidx" and "Xidxj"
-	for i in range(num_states):
-		columns = columns + ['Xj_val_'+states.index[i]] # For each state variable i, add a "Xj_val_statename" column
-	
-	#Add column "U" for column_u
-	columns_u = list(columns)
-	columns_u.insert(1,"U")
-	
-   
-	return Xi_val, Xidx, XX, xsteps, columns, columns_u
+    #building discretized array for each state variable and save them to XX
+    XX = []
+    for i in range(num_states):
+        X=np.linspace(xmin[i],xmax[i],xsteps[i])
+        XX.append(X)
+        
+
+    #calculating Xi_val, containing every state combination of the state variables
+    #(cartesian product of XX)
+    Xi_val = np.array(cartesian_product(XX))
+    # Xi_val = np.array(pd.tools.util.cartesian_product(XX))
+    if num_states == 1:
+        Xi_val = Xi_val[0]
+
+    #Index array for Xi_val
+    Xidx = np.arange(xsteps.prod())
+
+    # create list with column names for the DataFrames
+    columns = ['J'] # insert J = total costs
+    for i in range(num_states):
+        columns = columns + ['Xi_val_'+states.index[i]] # For each state variable i, add a "Xi_val_statename" column
+    columns = columns + ['Xidx','Xidxj'] #add columns "Xidx" and "Xidxj"
+    for i in range(num_states):
+        columns = columns + ['Xj_val_'+states.index[i]] # For each state variable i, add a "Xj_val_statename" column
+
+    #Add column "U" for column_u
+    columns_u = list(columns)
+    columns_u.insert(1,"U")
+
+
+    return Xi_val, Xidx, XX, xsteps, columns, columns_u
 
 
 
@@ -77,7 +77,8 @@ def DP_forward(states,U,timesteps,cst,srs,system,J0=None,verbose=False,t_verbose
 		system:	function to simulate the system that is optimized using DP
 		J0:		Cost vector for first time-step
 		verbose: Bool, turn shell output on (True) or off (False)
-		
+		t_verbose: Show output every t_verbose timesteps
+        
 	Returns:
 		Data:	pandas DataFrame with results
 			Data has to indices, where
@@ -125,7 +126,7 @@ def DP_forward(states,U,timesteps,cst,srs,system,J0=None,verbose=False,t_verbose
 		#init two Dataframes after first run of system
 			idx_data_ = pd.MultiIndex.from_product([Xidx,U],names=['Xi','U'])
 			columns_data_ = data_u.columns.union(columns_u)
-			data_ = pd.DataFrame(index=idx_data_,columns = columns_data_ )
+			data_ = pd.DataFrame(index=idx_data_,columns = columns_data_,dtype=np.float)
 			Data = pd.DataFrame(index=pd.MultiIndex.from_product([np.append(timesteps,T+1),Xidx],names=['t', 'Xidx_end']),columns = data_.columns)
 		
 		#filling first Dataframe
@@ -147,7 +148,7 @@ def DP_forward(states,U,timesteps,cst,srs,system,J0=None,verbose=False,t_verbose
 	#Timestep t1 - end
 	#####################
 	for t in timesteps[1:]:
-		data_ = pd.DataFrame(index=idx_data_,columns = columns_data_ )
+		data_ = pd.DataFrame(index=idx_data_,columns = columns_data_,dtype=np.float)
 		if verbose and t%t_verbose==0:
 			print('Timestep: ',t) #shell output
 				
@@ -191,9 +192,10 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 		cst: 	Constant Parameters for system simulation
 		srs: 	Time-series for system simulation
 		system:	function to simulate the system that is optimized using DP
-		J0:		Cost vector for first time-step
+		JT:		Cost vector for last time-step
 		verbose: Bool, turn shell output on (True) or off (False)
-		
+		t_verbose: Show output every t_verbose timesteps
+        
 	Returns:
 		Data:	pandas DataFrame with results
 			Data has to indices, where
@@ -245,7 +247,7 @@ def DP_backward(states,U,timesteps,cst,srs,system,JT=None,verbose=False,t_verbos
 		#init two Dataframes after first run of system
 			idx_data_ = pd.MultiIndex.from_product([Xidx,U],names=['Xi','U'])
 			columns_data_ = data_u.columns.union(columns_u)
-			data_ = pd.DataFrame(index=idx_data_,columns = columns_data_ )
+			data_ = pd.DataFrame(index=idx_data_,columns = columns_data_,dtype=np.float)
 			Data = pd.DataFrame(index=pd.MultiIndex.from_product([np.append(timesteps,T+1),Xidx],names=['t', 'Xidx_start']),columns = data_.columns)
 			
 		#filling first Dataframe
@@ -339,13 +341,13 @@ def find_index(xvalues,states):
 			xstpes: number of discretization steps for this state variable
 			
 	Returns:
-		Xidx_j: vector that contains the index of Xi_val, which value is 
+		idx: vector that contains the index of Xi_val, which value is 
 		the nearest to xvalues 
 
 	"""
 	Xi_val, Xidx, XX, xsteps, columns, columns_u = prepare_DP(states)
-	Xidx_j = find_nearest(xvalues,XX,xsteps)
-	return Xidx_j
+	idx = find_nearest(xvalues,XX,xsteps)
+	return idx
 	
 def modify_results(Data,states):
 	""" Rename columns of result DataFrame Data and drop unnecessary columns
@@ -379,3 +381,49 @@ def modify_results(Data,states):
 	Data.drop(['Xidx','Xidxj'],axis=1,inplace=True) #drop 'Xidx' and 'Xidxj'
 	
 	return Data
+    
+def cartesian_product(X):
+    """
+    Numpy version of itertools.product or pandas.compat.product.
+    Sometimes faster (for large inputs)...
+
+    Parameters
+    ----------
+    X : list-like of list-likes
+
+    Returns
+    -------
+    product : list of ndarrays
+
+    Examples
+    --------
+    >>> cartesian_product([list('ABC'), [1, 2]])
+    [array(['A', 'A', 'B', 'B', 'C', 'C'], dtype='|S1'),
+    array([1, 2, 1, 2, 1, 2])]
+
+    See also
+    --------
+    itertools.product : Cartesian product of input iterables.  Equivalent to
+        nested for-loops.
+    pandas.compat.product : An alias for itertools.product.
+    """
+    from pandas.core import common as com
+
+    if len(X) == 0:
+        return []
+
+    lenX = np.fromiter((len(x) for x in X), dtype=int)
+    cumprodX = np.cumproduct(lenX)
+
+    a = np.roll(cumprodX, 1)
+    a[0] = 1
+
+    if cumprodX[-1] != 0:
+        b = cumprodX[-1] / cumprodX
+    else:
+        # if any factor is empty, the cartesian product is empty
+        b = np.zeros_like(cumprodX)
+
+    return [np.tile(np.repeat(np.asarray(com._values_from_object(x)), b[i]),
+                    np.product(a[i]))
+            for i, x in enumerate(X)]

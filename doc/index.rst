@@ -29,17 +29,18 @@ This documentation contains the following pages:
 .. toctree::
    :maxdepth: 1
 
-   overview
-   system_data
-   system_model
+   DP
    prodyn
-   run_system
    examples
    
 
 Features
 --------
-* mutiple states...
+* prodyn uses the dynamic programming algorithm to calculate the decision seuqence which leads to minimal total costs
+* prodyn can be apllied to any system function which follows the required structure for inputs and outputs
+* Forward and backward implementation of the dynamic programming algorithm
+* Supports systems with multiple state variables
+
 
 
 Get Started
@@ -60,7 +61,7 @@ Dependencies (Python)
 ------------
 
 * `numpy`_ for mathematical operations 
-* `pandas`_ only for using the examples 
+* `pandas`_ for data handling 
 
 
    
