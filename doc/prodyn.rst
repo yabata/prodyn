@@ -130,19 +130,19 @@ the function :func:`prepare_DP` .
 .. function:: prepare_DP(states)
   
   :param states: pandas DataFrame where each index represents a state variable
-            xmin: minimum value of the state variable
-            xmax: maximum value of the state variable
-            xstpes: number of discretization steps for this state variable
+  :param xmin: minimum value of the state variable
+  :param xmax: maximum value of the state variable
+  :param xstpes: number of discretization steps for this state variable
  
    :return: the state vector X and other parameters needed for internal
-  calculations.
-
+   calculations.
+   
         * X: state vector with all possible state combinations
         * Xidx: index vector
         * XX: array that contains all state vectors of each variable
         * xsteps: arry containig the number of steps for each variable
         * columns: column names needed to create the ``Data`` Dataframe
-	* columns_u:  columns with dditional element 'U'
+        * columns_u:  columns with dditional element 'U'
  
 Decisions in prodyn
 ^^^^^^^^^^^^^^^^^^^^  
@@ -191,22 +191,25 @@ But they have to be in the right order and the right data type.
   :param X: state vector with all possible state combinations
   :param int t: current timestep
   :param cst: any type of variable that is directly passed to the system function 
-  and can be used inside the system function
+    and can be used inside the system function
   :param srs: any type of variable that is directly passed to the system function 
-  and can be used inside the system function  
+    and can be used inside the system function  
   :param Data: pandas DataFrame that contains the results from the previously
-  calculated timesteps. It can be accessed in the same way as the result data
-  (see :ref:`Accessing the results`)
+    calculated timesteps. It can be accessed in the same way as the result data
+    (see :ref:`Accessing the results`)
   
-  :return: cost: cost to go vector, containg the costs gor every possible state 
-  combination when applying decision u at the current timestep t,
-  1-D numpy array with the same number of elements as possible state 
-  combinations in X
-  :return: x_j: calculated following states of each state in X,
-  numpy array with the same shape as X,
-  :return: data: pandas DataFrame allowing to store additional parameters in 
-  the result DataFrame **Data**, which will also be an input for the system
-  function in the following timestep. 
+  
+  :return: **cost** for getting to following state **x_j** and additional **data**
+   
+        * cost: cost to go vector, containg the costs gor every possible state 
+          combination when applying decision u at the current timestep t,
+          1-D numpy array with the same number of elements as possible state 
+          combinations in X
+        * x_j: calculated following states of each state in X,
+          numpy array with the same shape as X.
+        * data: pandas DataFrame allowing to store additional parameters in 
+          the result DataFrame **Data**, which will also be an input for the system
+          function in the following timestep. 
   
   
   The inputs **cst** and **srs** are parameters that are an input to the DP
@@ -227,8 +230,8 @@ But they have to be in the right order and the right data type.
   names are neither 'U', 'J' nor one of the state variable names.
 
   
-:func:`DP_backward`
--------------------
+Backward Dynamic Programming :func:`DP_backward`
+------------------------------------------------
 
 If you have defined your states, decisions, timesteps and the system function,
 you can simply run the funtion :func:`DP_backward` to find the optimal solution
@@ -241,18 +244,18 @@ if not needed.
 .. function:: DP_backward(states,U,timesteps,cst,srs,system,[J0=None,verbose=False,t_verbose=1)
   
   :param states: pandas dataframe where each index represents a state variable
-  see :ref:`States in prodyn`
+    see :ref:`States in prodyn`
   :param U: List of possible decision, see :ref:`Decisions in prodyn`
   :param timesteps: numpy array containing all timesteps
   :param cst: (Constant) Parameters for system simulation
   :param srs: (Time-series) parameters for system simulation
   :system: function to simulate the system that is optimized using DP, 
-  see :ref:`The system function in prodyn`
+    see :ref:`The system function in prodyn`
   :param J0: Cost vector for first time-step, allows to define initial start costs 
-  and therby select a certain end state for backward DP. JT has to be a 1D numpy
-  array with the same nuber of elements as defined state combinations in X. 
-  See :ref:`Define initial costs` .
-  Each element defines the initial end cost of the coresponding state.  
+    and therby select a certain end state for backward DP. JT has to be a 1D numpy
+    array with the same nuber of elements as defined state combinations in X. 
+    See :ref:`Define initial costs` .
+    Each element defines the initial end cost of the coresponding state.  
   :param verbose: Bool, turn shell output on (True) or off (False)
   :param t_verbose: Show output every t_verbose timesteps
   
