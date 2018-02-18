@@ -128,23 +128,22 @@ the function :func:`prepare_DP` .
     X, Xidx, XX, xsteps, columns, columns_u = prodyn.prepare_DP(states)
 
 .. function:: prepare_DP(states)
-
-  Returns the state vector X and other parameters needed for internal
-  calculations.
   
   :param states: pandas DataFrame where each index represents a state variable
             xmin: minimum value of the state variable
             xmax: maximum value of the state variable
             xstpes: number of discretization steps for this state variable
-  
-  :return: X: state vector with all possible state combinations
-  :return: Xidx: index vector
-  :return: XX: array that contains all state vectors of each variable
-  :return: xsteps: arry containig the number of steps for each variable
-  :return: columns: column names needed to create the ``Data`` Dataframe
-  :return: columns_u:  columns with dditional element 'U'
-   
+ 
+   :return: the state vector X and other parameters needed for internal
+  calculations.
 
+        * X: state vector with all possible state combinations
+        * Xidx: index vector
+        * XX: array that contains all state vectors of each variable
+        * xsteps: arry containig the number of steps for each variable
+        * columns: column names needed to create the ``Data`` Dataframe
+	* columns_u:  columns with dditional element 'U'
+ 
 Decisions in prodyn
 ^^^^^^^^^^^^^^^^^^^^  
   
