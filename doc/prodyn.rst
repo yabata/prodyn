@@ -417,7 +417,7 @@ For our example accessing the results for starting with an empty storage
 
 .. _access-forw-ref:
     
-^Access forward DP results
+Access forward DP results
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The result of the function :func:`DP_forward`
@@ -539,7 +539,7 @@ for the state which is closest to a given input state value.
 
 Here is an example of using :func:`find_index` for one state variable
 
- .. csv-table:: Example of states Dataframe for one state variable
+.. csv-table:: Example of states Dataframe for one state variable
    :header-rows: 2
    :stub-columns: 1
 
@@ -548,7 +548,7 @@ Here is an example of using :func:`find_index` for one state variable
     battery,0,12,5
 
 
- .. math::
+.. math::
 
 	X = \begin{bmatrix}
 	0\\ 
@@ -580,7 +580,7 @@ Here is an example of using :func:`find_index` for one state variable
 And another example of using :func:`find_index` for one two state variables    
     
     
- .. csv-table:: Example of states Dataframe for two state variables
+.. csv-table:: Example of states Dataframe for two state variables
    :header-rows: 2
    :stub-columns: 1
 
@@ -589,7 +589,7 @@ And another example of using :func:`find_index` for one two state variables
     battery,0,3,4
     heat-storage,0,5,2
 
- .. math::
+.. math::
 
 	X = \begin{bmatrix}
 	0 & 0\\ 
@@ -645,7 +645,7 @@ initial costs for state x=3 (xidx=1) is set to -9999. (numpy is imported as np)
     J0 = np.zeros(5)
     J0[1]=-9999
 
- .. math::
+.. math::
 
 	X = \begin{bmatrix}
 	0\\ 
@@ -681,7 +681,7 @@ as np)
     J0[1]=-9999
     
     
- .. math::
+.. math::
 
 	X = \begin{bmatrix}
 	0 & 0\\ 

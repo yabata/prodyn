@@ -124,6 +124,7 @@ In our case we choose integers to represent our control signal. 1 for charging
 the battery, 0 for doing nothing, -1 for dischraging it.
 
 ::
+
     controls = [-1,0,1] #The set of control signals/decisions (often called "U")
 
 timesteps
@@ -159,6 +160,7 @@ As an incentive to use the storage we define a price curve with low costs
 in the beginning and high costs at the end of the day
 
 ::
+
     timeseries['el. price'] = np.array([1,2,3])
                             
 System model
