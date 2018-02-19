@@ -134,8 +134,8 @@ the function :func:`prepare_DP` .
   :param xmax: maximum value of the state variable
   :param xstpes: number of discretization steps for this state variable
  
-   :return: the state vector X and other parameters needed for internal
-   calculations.
+  :return: the state vector X and other parameters needed for internal
+    calculations.
    
         * X: state vector with all possible state combinations
         * Xidx: index vector
@@ -212,22 +212,22 @@ But they have to be in the right order and the right data type.
           function in the following timestep. 
   
   
-  The inputs **cst** and **srs** are parameters that are an input to the DP
-  funtion and directly  passed to the system funtion. They are not neccesary
-  for DP and can have any data type. They are ment to be used inside the system
-  funtion representing constant (cst) and time dependent (srs) data. You can 
-  also just use one of them or none, but they have to be defines as inputs in
-  your system funtion.
-  
-  The funtion output **data** allows on to pass other caöcuöated variables than
-  the state variables to the result DataFrame **Data**, which is also an input
-  to the system function and can also be accesed at every call.
-   The index of **data** has to be a range from
-  zero to M-1, where M is the number of state combinations. **data** has to be 
-  defined even if no additional parameters should be passed to **Data**. For 
-  each parameter that  should be passed, simply a new colums with its name 
-  and a valid value for each index has to be created. Make sure, that the column
-  names are neither 'U', 'J' nor one of the state variable names.
+The inputs **cst** and **srs** are parameters that are an input to the DP
+funtion and directly  passed to the system funtion. They are not neccesary
+for DP and can have any data type. They are ment to be used inside the system
+funtion representing constant (cst) and time dependent (srs) data. You can 
+also just use one of them or none, but they have to be defines as inputs in
+your system funtion.
+
+The funtion output **data** allows on to pass other caöcuöated variables than
+the state variables to the result DataFrame **Data**, which is also an input
+to the system function and can also be accesed at every call.
+The index of **data** has to be a range from
+zero to M-1, where M is the number of state combinations. **data** has to be 
+defined even if no additional parameters should be passed to **Data**. For 
+each parameter that  should be passed, simply a new colums with its name 
+and a valid value for each index has to be created. Make sure, that the column
+names are neither 'U', 'J' nor one of the state variable names.
 
   
 Backward Dynamic Programming :func:`DP_backward`
@@ -261,8 +261,8 @@ if not needed.
   
   :return: Data: pandas DataFrame with results, see :ref:`Accessing the results`
 
-:func:`DP_forward`
------------------
+Forward Dynamic Programming :func:`DP_forward`
+-----------------------------------------------
 
 If you have defined your states, decisions, timesteps and the system function,
 you can simply run the funtion :func:`DP_forward` to find the optimal solution
@@ -275,18 +275,18 @@ if not needed.
 .. function:: DP_forward(states,U,timesteps,cst,srs,system,[JT=None,verbose=False,t_verbose=1)
   
   :param states: pandas dataframe where each index represents a state variable
-  see :ref:`States in prodyn`
+    see :ref:`States in prodyn`
   :param U: List of possible decision, see :ref:`Decisions in prodyn`
   :param timesteps: numpy array containing all timesteps
   :param cst: (Constant) Parameters for system simulation
   :param srs: (Time-series) parameters for system simulation
   :system: function to simulate the system that is optimized using DP, 
-  see :ref:`The system function in prodyn`
+    see :ref:`The system function in prodyn`
   :param JT: Cost vector for last time-step, allows to define initial end costs 
-  and therby select a certain end state for backward DP. JT has to be a 1D numpy
-  array with the same nuber of elements as defined state combinations in X. 
-  See :ref:`Define initial costs`
-  Each element defines the initial end cost of the coresponding state.  
+    and therby select a certain end state for backward DP. JT has to be a 1D numpy
+    array with the same nuber of elements as defined state combinations in X. 
+    See :ref:`Define initial costs` .
+    Each element defines the initial end cost of the coresponding state.  
   :param verbose: Bool, turn shell output on (True) or off (False)
   :param t_verbose: Show output every t_verbose timesteps
   
@@ -302,7 +302,7 @@ from each other. How to access the results is explained based on the
 :ref:`Simple storage example` .
 
 Backward DP
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 The result of the function :func:`DP_backward`
 is a pandas DataFrame (called **Data** here) with two indices. **t** represents
@@ -512,12 +512,12 @@ for the state which is closest to a given input state value.
   
   :param xvalues: array of states, for which the index is needed 
   :param sates: pandas dataframe where each index represents a state variable
-			xmin: minimum value of the state variable
-			xmax: maximum value of the state variable
-			xstpes: number of discretization steps for this state variable
+		* xmin: minimum value of the state variable
+		* xmax: maximum value of the state variable
+		* xstpes: number of discretization steps for this state variable
   
   :return: idx: vector that contains the index of X, which value is 
-  the nearest to xvalues 
+    the nearest to xvalues 
 
 Here is an example of using :func:`find_index` for one state variable
 
