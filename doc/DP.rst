@@ -136,12 +136,12 @@ The Backward Dynamic Programming starts with the last timestep and goes backward
 in time to solve the optimization problem step by step. the backward algorithm
 is easier to implement (and in prodyn faster) than the forward one.
 
-So based on the possibilities shown in figure XXX, we want to find the path
+So based on the possibilities shown in following figure, we want to find the path
 which leads to the cheapest total costs. Therefore we need to calculate our
 total costs :math:`J_t` to get to a certain state in a certain timestep t.
 We can also define initial end costs (here :math:`J_3`) for the last timestep,
 which is necessary in Backward DP if we want our solution to have a defined end
-state (more about this HERE???). In this example, we set the initial end costs
+state (see :ref:`init-costs-ref`). In this example, we set the initial end costs
 :math:`J_3` (end of last timestep in Backward DP) to 0 € for both possible
 states.
 
