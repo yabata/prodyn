@@ -55,6 +55,8 @@ In the following the general idea of both, the forward and the backward
 implementation of DP will be explained based on a simple storage example.
 
 
+.. _simple-storage-ref:
+
 Simple storage example
 ----------------------
 
@@ -124,6 +126,8 @@ system has 4 states!
    
 An implementation of the example can be found in the examples folder.
 
+
+.. _DP-back-ref:
 
 Backward Dynamic Programming
 ----------------------------
@@ -226,8 +230,9 @@ for :math:`x_{0}=0kWh` .
 As we can see, the Backwards Dynamic Programming algorithm (in prodyn)
 gives us the solution for every possible initial state :math:`x_{0}` . If we
 want the solution to have a specific end state, we have to define initial
-costs :math:`J_end` . How to do this is prodyn see :ref:`Define initial costs`
+costs :math:`J_end` . How to do this is prodyn see :ref:`init-costs-ref`
 
+.. _DP-forw-ref:
 
 Forward Dynamic Programming
 ----------------------------

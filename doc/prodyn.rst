@@ -8,6 +8,8 @@ Using prodyn
 Define states and decisions in prodyn
 -------------------------------------
 
+.. _states-ref:
+
 States in prodyn
 ^^^^^^^^^^^^^^^^
 
@@ -143,7 +145,10 @@ the function :func:`prepare_DP` .
         * xsteps: arry containig the number of steps for each variable
         * columns: column names needed to create the ``Data`` Dataframe
         * columns_u:  columns with dditional element 'U'
- 
+
+
+.. _decisions-ref:
+        
 Decisions in prodyn
 ^^^^^^^^^^^^^^^^^^^^  
   
@@ -170,7 +175,8 @@ Here is another example of defining **U** where the possible decisions are
 
     U = ['charge','normal','discharge']
 
-.. _definesystem-ref:
+
+.. _system-function-ref:
 
 The system function in prodyn
 -----------------------------
@@ -196,7 +202,7 @@ But they have to be in the right order and the right data type.
     and can be used inside the system function  
   :param Data: pandas DataFrame that contains the results from the previously
     calculated timesteps. It can be accessed in the same way as the result data
-    (see :ref:`Accessing the results`)
+    (see :ref:`access-ref`)
   
   
   :return: **cost** for getting to following state **x_j** and additional **data**
@@ -229,7 +235,8 @@ each parameter that  should be passed, simply a new colums with its name
 and a valid value for each index has to be created. Make sure, that the column
 names are neither 'U', 'J' nor one of the state variable names.
 
-  
+.. _DP-back-func-ref:
+
 Backward Dynamic Programming :func:`DP_backward`
 ------------------------------------------------
 
@@ -244,23 +251,27 @@ if not needed.
 .. function:: DP_backward(states,U,timesteps,cst,srs,system,[J0=None,verbose=False,t_verbose=1)
   
   :param states: pandas dataframe where each index represents a state variable
-    see :ref:`States in prodyn`
-  :param U: List of possible decision, see :ref:`Decisions in prodyn`
+    see :ref:`states-ref`
+  :param U: List of possible decision, see :ref:`decisions-ref`
   :param timesteps: numpy array containing all timesteps
   :param cst: (Constant) Parameters for system simulation
   :param srs: (Time-series) parameters for system simulation
-  :system: function to simulate the system that is optimized using DP, 
-    see :ref:`The system function in prodyn`
+  :param system: function to simulate the system that is optimized using DP, 
+    see :ref:`system-function-ref`
   :param J0: Cost vector for first time-step, allows to define initial start costs 
     and therby select a certain end state for backward DP. JT has to be a 1D numpy
     array with the same nuber of elements as defined state combinations in X. 
-    See :ref:`Define initial costs` .
+    See :ref:`init-costs-ref` .
     Each element defines the initial end cost of the coresponding state.  
   :param verbose: Bool, turn shell output on (True) or off (False)
   :param t_verbose: Show output every t_verbose timesteps
   
-  :return: Data: pandas DataFrame with results, see :ref:`Accessing the results`
+  :return: Data: pandas DataFrame with results, see :ref:`access-back-ref`
 
+
+
+.. _DP-forw-func-ref:  
+  
 Forward Dynamic Programming :func:`DP_forward`
 -----------------------------------------------
 
@@ -273,45 +284,49 @@ if not needed.
 
 
 .. function:: DP_forward(states,U,timesteps,cst,srs,system,[JT=None,verbose=False,t_verbose=1)
-  
+
   :param states: pandas dataframe where each index represents a state variable
-    see :ref:`States in prodyn`
-  :param U: List of possible decision, see :ref:`Decisions in prodyn`
+    see :ref:`states-ref`
+  :param U: List of possible decision, see :ref:`decisions-ref`
   :param timesteps: numpy array containing all timesteps
   :param cst: (Constant) Parameters for system simulation
   :param srs: (Time-series) parameters for system simulation
-  :system: function to simulate the system that is optimized using DP, 
-    see :ref:`The system function in prodyn`
+  :param system: function to simulate the system that is optimized using DP, 
+    see :ref:`system-function-ref`
   :param JT: Cost vector for last time-step, allows to define initial end costs 
     and therby select a certain end state for backward DP. JT has to be a 1D numpy
     array with the same nuber of elements as defined state combinations in X. 
-    See :ref:`Define initial costs` .
+    See :ref:`init-costs-ref` .
     Each element defines the initial end cost of the coresponding state.  
   :param verbose: Bool, turn shell output on (True) or off (False)
   :param t_verbose: Show output every t_verbose timesteps
   
-  :return: Data: pandas DataFrame with results, see :ref:`Accessing the results`
+  :return: Data: pandas DataFrame with results, see :ref:`access-forw-ref`
 
 
+.. _access-ref:
+  
 Accessing the results
 ---------------------
 
 The funtions :func:`DP_forward` and :func:`DP_backward` return a pandas 
 DataFrame with the results. The result DataFrames of the two functions differ
 from each other. How to access the results is explained based on the 
-:ref:`Simple storage example` .
+:ref:`simple-storage-ref` .
 
-Backward DP
-^^^^^^^^^^^^
+.. _access-back-ref:
+
+Access backward DP results
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The result of the function :func:`DP_backward`
 is a pandas DataFrame (called **Data** here) with two indices. **t** represents
 the timestep and **Xidx_start** represents the index of the system state after 
 finishing the optimization, which is the system state at the first timestep for 
-backward DP (see :ref:`Backward Dynamic Programming`).
+backward DP (see :ref:`DP-back-ref`).
 
 The following table and figure shows the result of the 
-:ref:`Simple storage example` solved with backward DP.
+:ref:`simple-storage-ref` solved with backward DP.
 
 :func:`DP_backward` always calculates a solution for every possible starting 
 state.
@@ -343,9 +358,9 @@ t=2) and when starting with the state with index 0, and so on.
 Note that Xidx_start represents the **index** of state vector X, not the state
 value (although in our example there is no difference). So to find the results
 for any state combination in X, we have to know the coresponding value in Xidx,
-which is the index array (see :ref:`States in prodyn`). The function 
+which is the index array (see :ref:`states-ref`). The function 
 :func:`find_index` finds the (closest) corresponding index for any given 
-state value (combination). See :ref:`Using :func:`find_index`` .
+state value (combination). See :ref:`find-index-ref` .
 
 .. csv-table:: result for the simple storage example solved with backward DP
    :header-rows: 2
@@ -399,18 +414,20 @@ For our example accessing the results for starting with an empty storage
     3,-3,-1,-3,1
     4,NaN,NaN,NaN,0
     
+
+.. _access-forw-ref:
     
-Forward DP
-^^^^^^^^^^
+^Access forward DP results
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The result of the function :func:`DP_forward`
 is a pandas DataFrame (called **Data** here) with two indices. **t** represents
 the timestep and **Xidx_end** represents the index of the system state after 
 finishing the optimization, which is the system state after the last timestep 
-for forward DP (see :ref:`Forward Dynamic Programming`).
+for forward DP (see :ref:`DP-back-ref`).
 
 The following table and figure shows the result of the 
-:ref:`Simple storage example` solved with forward DP.
+:ref:`simple-storage-ref` solved with forward DP.
 
 :func:`DP_forward` always calculates a solution for every possible ending 
 state.
@@ -442,9 +459,9 @@ t=2) and when ending with the state with index 0, and so on.
 Note that Xidx_end represents the **index** of state vector X, not the state
 value (although in our example there is no difference). So to find the results
 for any state combination in X, we have to know the coresponding value in Xidx,
-which is the index array (see :ref:`States in prodyn`). The function 
+which is the index array (see :ref:`states-ref`). The function 
 :func:`find_index` finds the (closest) corresponding index for any given 
-state value (combination). See :ref:`Using :func:`find_index`` .
+state value (combination). See :ref:`find-index-ref` .
 
 .. csv-table:: result for the simple storage example solved with forward DP
    :header-rows: 2
@@ -499,7 +516,8 @@ For our example accessing the results for ending with an empty storage
     4,NaN,NaN,NaN,0
 
 
-
+.. _find-index-ref:
+    
 Using :func:`find_index`
 -----------------------
 
@@ -608,8 +626,7 @@ And another example of using :func:`find_index` for one two state variables
 
 
 
-    
-    
+.. _init-costs-ref: 
     
 Define initial costs
 --------------------
