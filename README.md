@@ -3,7 +3,7 @@ Generic implementation of the dynamic programming algorithm for optimal system c
 
 [![Documentation Status](https://readthedocs.org/projects/prodyn/badge/?version=latest)](https://prodyn.readthedocs.org/en/latest/) [![DOI](https://zenodo.org/badge/73300738.svg)](https://zenodo.org/badge/latestdoi/73300738)
 
-The [documenation](http://prodyn.readthedocs.org) is currently in progress.
+prodyn [documenation](http://prodyn.readthedocs.org) .
 
 ## Features
 
