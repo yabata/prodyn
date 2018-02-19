@@ -255,7 +255,7 @@ Therefore we need to calculate our
 total costs :math:`J_t` to get to a certain state in a certain timestep t.
 We can also define initial costs (here :math:`J_0`) for the first timestep,
 which is necessary in forward DP if we want our solution to have a defined 
-starting state (see :ref:`Define initial costs`). In this example, we set 
+starting state (see :ref:`init-costs-ref`). In this example, we set 
 the initial costs :math:`J_0` to 0 € for both possible states.
 
 .. figure:: img/DP_fw_02.png
@@ -328,5 +328,5 @@ As we cann see, starting from an empty storage :math:`x_{0}=0kWh` was already
 excluded as part of optimal solution after the first step. 
 If we want to have a specific initial state in forward DP, we have to define
 initial costs :math:`J_end` . How to do this is prodyn see 
-:ref:`Define initial costs`
+:ref:`init-costs-ref`
 
