@@ -6,7 +6,7 @@
 .. module:: prodyn
 
 prodyn: Implementation of the dymaic programming algorithm for optimal system control
-================================================================
+======================================================================================
 
 :Maintainer: Dennis Atabay, <dennis.atabay@tum.de>
 :Organization: `Institute for Energy Economy and Application Technology`_,
@@ -58,7 +58,7 @@ Get Started
 
   
 Dependencies (Python)
-------------
+---------------------
 
 * `numpy`_ for mathematical operations 
 * `pandas`_ for data handling 

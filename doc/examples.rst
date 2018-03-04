@@ -83,7 +83,7 @@ Implementation
 ^^^^^^^^^^^^^^^^
 
 Imports
-^^^^^^
+^^^^^^^^
 
 Import pandas and numpy for data handling and operation, prodyn for using DP
 and matplotllib for plotting.
@@ -139,7 +139,7 @@ for 3 hours, so we define a numpy array [0,1,2,3]
 
 
 Constant Parameters
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 We can define two variables that contain constant parameters we can access
 within our system function. Both variables can be defined as any type 

@@ -519,7 +519,7 @@ For our example accessing the results for ending with an empty storage
 .. _find-index-ref:
     
 Using :func:`find_index`
------------------------
+-------------------------
 
 For accessing the results or creating initial costs, it is usefull to know
 the corresponding index of a state value (combination). The function 
